@@ -11,7 +11,7 @@ public class DoodleMeServer {
     
     public static void main(String[] args) throws SQLException {
         DBConnector DBC = new DBConnector();
-        //DBC.dropAllTables();
+        DBC.dropAllTables();
         DBC.createTables();
         SpringApplication.run(DoodleMeServer.class, args);
     }
