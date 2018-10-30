@@ -1,13 +1,10 @@
 package com.hoymihoy.DoodleServer.Database;
 
 import com.hoymihoy.DoodleServer.DTOS.SecureUserLogin;
-import com.hoymihoy.DoodleServer.DTOS.UserModel;
+import com.hoymihoy.DoodleServer.DTOS.User;
 
-import javax.validation.constraints.Null;
 import java.sql.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-        
+
 public class DBConnector {
     private Connection con;
     private Statement stmt;
@@ -82,7 +79,7 @@ public class DBConnector {
         return 1;
     }
 
-    public int createNewUser(UserModel user) throws SQLException {
+    public int createNewUser(User user) throws SQLException {
         String updateString = "INSERT INTO Users(userName,password,first_name,last_name,email,birthDate) VALUES('" + user.getUsername() + "', '" + user.getPassword() + "', '" + user.getFirstname() + "', '"
                 + user.getLastname() + "', '" + user.getEmail() + "', '" + user.getBirthdate() + "');";
 
@@ -104,9 +101,9 @@ public class DBConnector {
         }
     }
 
-    public UserModel queryUserID(int userID) throws SQLException {
+    public User queryUserID(int userID) throws SQLException {
         String queryString = "SELECT * FROM Users WHERE userID = '" + userID + "';";
-        UserModel user = new UserModel();
+        User user = new User();
 
         try {
             con = initializeConnection();
@@ -168,7 +165,7 @@ public class DBConnector {
         return userID;
     }
 
-    public int updateUser(int userID, UserModel user) throws SQLException {
+    public int updateUser(int userID, User user) throws SQLException {
         String updateString = "UPDATE Users SET userName = '" + user.getUsername() + "', first_name = '" + user.getFirstname()
                 + "', last_name = '" + user.getLastname() + "', email = '" + user.getEmail() + "', birthDate = '" + user.getBirthdate()
                 + "' WHERE userID = " + userID;

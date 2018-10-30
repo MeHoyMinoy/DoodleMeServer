@@ -2,7 +2,7 @@ package com.hoymihoy.DoodleServer.DTOS;
 
 import java.sql.Date;
 
-public class UserModel {
+public class User {
     private int userID;
     private String username;
     private String password;

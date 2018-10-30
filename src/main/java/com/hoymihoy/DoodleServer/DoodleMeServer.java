@@ -15,5 +15,4 @@ public class DoodleMeServer {
         DBC.createTables();
         SpringApplication.run(DoodleMeServer.class, args);
     }
-    
 }

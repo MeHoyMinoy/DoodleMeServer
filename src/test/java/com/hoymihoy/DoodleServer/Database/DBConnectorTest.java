@@ -1,14 +1,11 @@
 package com.hoymihoy.DoodleServer.Database;
 
 import com.hoymihoy.DoodleServer.DTOS.SecureUserLogin;
-import com.hoymihoy.DoodleServer.DTOS.UserModel;
+import com.hoymihoy.DoodleServer.DTOS.User;
 import org.junit.Assert;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import org.junit.FixMethodOrder;
 import org.junit.runners.MethodSorters;
-
-import java.text.SimpleDateFormat;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class DBConnectorTest {
@@ -28,7 +25,7 @@ public class DBConnectorTest {
     @Test
     public void t02CreateNewUserTestPass() throws Exception {
         DBConnector DBC = new DBConnector();
-        UserModel testUser = new UserModel();
+        User testUser = new User();
 
         testUser.setFirstname("Devon");
         testUser.setLastname("Graves");
@@ -43,7 +40,7 @@ public class DBConnectorTest {
     @Test
     public void t03CreateDuplicateUserTestFail() throws Exception {
         DBConnector DBC = new DBConnector();
-        UserModel testUser = new UserModel();
+        User testUser = new User();
 
         testUser.setFirstname("Devon");
         testUser.setLastname("Graves");
@@ -58,7 +55,7 @@ public class DBConnectorTest {
     @Test
     public void t06QueryUsernameTestPass() throws Exception {
         DBConnector DBC = new DBConnector();
-        UserModel user = new UserModel();
+        User user = new User();
 
         user = DBC.queryUserID(1);
 
@@ -70,7 +67,7 @@ public class DBConnectorTest {
     @Test
     public void t07QueryUsernameTestFail() throws Exception {
         DBConnector DBC = new DBConnector();
-        UserModel user = new UserModel();
+        User user = new User();
 
         user = DBC.queryUserID(5);
 
@@ -104,7 +101,7 @@ public class DBConnectorTest {
     @Test public void t25UpdateUserTestPass() throws Exception {
         DBConnector DBC = new DBConnector();
 
-        UserModel user = new UserModel();
+        User user = new User();
 
 
         user.setUsername("newUserName");
@@ -119,7 +116,7 @@ public class DBConnectorTest {
     @Test public void t26UpdateUserTestFail() throws Exception {
         DBConnector DBC = new DBConnector();
 
-        UserModel user = new UserModel();
+        User user = new User();
 
 
         user.setUsername("newUserName");
