@@ -9,15 +9,15 @@ import org.junit.runners.MethodSorters;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class DBConnectorTest {
 
-//    @Test
-//    public void t00dropAllTablesTest() throws Exception {
-//        DBConnector DBC = new DBConnector();
-//        Assert.assertEquals(1, DBC.dropAllTables());
-//    }
-//    
-//    @Test
-//    public void t01CreateTablesTestPass() throws Exception {
-//        DBConnector DBC = new DBConnector();
-//        Assert.assertEquals(1, DBC.createTables());
-//    }
+    @Test
+    public void t00dropAllTablesTest() throws Exception {
+        DBConnector DBC = new DBConnector();
+        Assert.assertEquals(1, DBC.dropAllTables());
+    }
+
+    @Test
+    public void t01CreateTablesTestPass() throws Exception {
+        DBConnector DBC = new DBConnector();
+        Assert.assertEquals(1, DBC.createTables());
+    }
 }
