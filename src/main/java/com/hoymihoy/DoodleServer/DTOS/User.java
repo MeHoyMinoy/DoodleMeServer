@@ -63,8 +63,6 @@ public class User {
         this.birthdate = birthdate;
     }
 
-
-
     public String getEmail()
     {
         return email;

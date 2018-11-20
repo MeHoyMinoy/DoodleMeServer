@@ -43,6 +43,12 @@ public class DBConnector {
             stmt = con.createStatement();
             
             stmt.executeUpdate("DROP TABLE Users");
+
+            stmt.executeUpdate("DROP TABLE FriendsList");
+
+            stmt.executeUpdate("DROP TABLE Paintings");
+
+            stmt.executeUpdate("DROP TABLE Games");
         } 
         catch (Exception ex) {
             System.out.println(ex);
@@ -63,10 +69,32 @@ public class DBConnector {
 
             stmt=con.createStatement();
             
-            stmt.executeUpdate("create TABLE Users(userID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, userName VARCHAR(100) NOT NULL UNIQUE, password VARCHAR(100) NOT NULL,"
-                    + "first_name VARCHAR(100), last_name VARCHAR(100), email VARCHAR(100), birthDate DATE)");
+            stmt.executeUpdate("create TABLE Users(" +
+                    "userID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
+                    "userName VARCHAR(100) NOT NULL, " +
+                    "password VARCHAR(100) NOT NULL, " +
+                    "firstName VARCHAR(100), " +
+                    "lastName VARCHAR(100), " +
+                    "email VARCHAR(100), " +
+                    "birthDate DATE," +
+                    "UNIQUE (userID))");
 
-            stmt.executeUpdate("create TABLE Paintings(paintingID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, creatorID)")
+            stmt.executeUpdate("create TABLE FriendsList(" +
+                    "FriendshipID INT NOT NULL AUTO_INCREMENT PRIMARY KEY," +
+                    "FriendID_1 INT NOT NULL," +
+                    "FriendID_2 INT NOT NULL)");
+
+            stmt.executeUpdate("create TABLE Paintings(" +
+                    "PaintingID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
+                    "GameID INT NOT NULL AUTO_INCREMENT" +
+                    "OwnerID VARCHAR(100) NOT NULL UNIQUE, " +
+                    "Image VARCHAR(500) NOT NULL)");
+
+            stmt.executeUpdate("create TABLE Games(" +
+                    "GameID INT NOT NULL AUTO_INCREMENT, " +
+                    "UserID INT NOT NULL)");
+
+
         }
         catch (Exception ex) {
             System.out.println(ex);

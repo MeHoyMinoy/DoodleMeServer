@@ -10,7 +10,8 @@ public class DB_User {
     DBConnector DBC = new DBConnector();
 
     public int createNewUser(User user) throws SQLException {
-        String updateString = "INSERT INTO Users(userName,password,first_name,last_name,email,birthDate) VALUES('" + user.getUsername() + "', '" + user.getPassword() + "', '" + user.getFirstname() + "', '"
+        String updateString = "INSERT INTO Users(userName,password,first_name,last_name,email,birthDate)" +
+                " VALUES('" + user.getUsername() + "', '" + user.getPassword() + "', '" + user.getFirstname() + "', '"
                 + user.getLastname() + "', '" + user.getEmail() + "', '" + user.getBirthdate() + "');";
 
         try {
@@ -95,11 +96,13 @@ public class DB_User {
         return userID;
     }
 
-    public int updateUser(int userID, User user) throws SQLException {
-        String updateString = "UPDATE Users SET userName = '" + user.getUsername() + "', first_name = '" + user.getFirstname()
-                + "', last_name = '" + user.getLastname() + "', email = '" + user.getEmail() + "', birthDate = '" + user.getBirthdate()
-                + "' WHERE userID = " + userID;
-
+    public int updateUser(User user) throws SQLException {
+        String updateString = "UPDATE Users SET userName = '" + user.getUsername() +
+                "', first_name = '" + user.getFirstname() +
+                "', last_name = '" + user.getLastname() +
+                "', email = '" + user.getEmail() +
+                "', birthDate = '" + user.getBirthdate() +
+                "' WHERE userID = " + user.getUserID();
         try {
             DBC.con = DBC.initializeConnection();
             DBC.stmt = DBC.con.createStatement();
