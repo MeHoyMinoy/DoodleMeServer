@@ -63,4 +63,30 @@ public class DB_Paintings {
             {DBC.stmt.close();}
         }
     }
+
+    public int updatePainting(Painting p) throws SQLException
+    {
+        String updateString = "UPDATE Paintings SET " +
+                "Image = " + p.getImage() +
+                "WHERE PaintingID = " + p.getPaintingID();
+
+        try {
+            DBC.con = DBC.initializeConnection();
+            DBC.stmt = DBC.con.createStatement();
+            int returnValue = DBC.stmt.executeUpdate(updateString);
+            DBC.con.close();
+
+            return returnValue;
+        }
+        catch (Exception e) {
+            System.out.println(e);
+            DBC.con.close();
+            return -1;
+        }
+        finally {
+            if (DBC.stmt != null)
+            {DBC.stmt.close();}
+        }
+    }
+
 }
