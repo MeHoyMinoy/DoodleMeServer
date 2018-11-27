@@ -86,16 +86,15 @@ public class DBConnector {
 
             stmt.executeUpdate("create TABLE Paintings(" +
                     "PaintingID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
-                    "GameID INT NOT NULL AUTO_INCREMENT" +
-                    "OwnerID VARCHAR(100) NOT NULL UNIQUE, " +
+                    "GameName VARCHAR(100) NOT NULL," +
+                    "OwnerUserID INT NOT NULL, " +
                     "Image VARCHAR(500) NOT NULL)");
 
-            stmt.executeUpdate("create TABLE Games(" +
-                    "GameID INT NOT NULL AUTO_INCREMENT, " +
+            stmt.executeUpdate("create TABLE UserPaintings(" +
+                    "PaintingID INT NOT NULL, " +
                     "UserID INT NOT NULL)");
-
-
         }
+
         catch (Exception ex) {
             System.out.println(ex);
             con.close();

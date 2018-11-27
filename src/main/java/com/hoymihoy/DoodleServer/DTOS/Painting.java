@@ -1,40 +1,40 @@
 package com.hoymihoy.DoodleServer.DTOS;
 
 public class Painting {
-    private int PaintingID;
-    private int GameID;
-    private String OwnerID;
-    private String Image;
+    private int paintingID;
+    private String gameName;
+    private String ownerUserID;
+    private String image;
+
+    public String getGameName() {
+        return gameName;
+    }
+
+    public void setGameName(String gameName) {
+        this.gameName = gameName;
+    }
 
     public int getPaintingID() {
-        return PaintingID;
+        return paintingID;
     }
 
     public void setPaintingID(int paintingID) {
-        PaintingID = paintingID;
+        this.paintingID = paintingID;
     }
 
-    public int getGameID() {
-        return GameID;
+    public String getOwnerUserID() {
+        return ownerUserID;
     }
 
-    public void setGameID(int gameID) {
-        GameID = gameID;
-    }
-
-    public String getOwnerID() {
-        return OwnerID;
-    }
-
-    public void setOwnerID(String ownerID) {
-        OwnerID = ownerID;
+    public void setOwnerUserID(String ownerUserID) {
+        this.ownerUserID = ownerUserID;
     }
 
     public String getImage() {
-        return Image;
+        return image;
     }
 
     public void setImage(String image) {
-        Image = image;
+        this.image = image;
     }
 }
