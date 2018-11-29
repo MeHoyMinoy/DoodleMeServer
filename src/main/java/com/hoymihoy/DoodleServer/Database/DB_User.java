@@ -11,7 +11,7 @@ public class DB_User {
 
     public int createNewUser(User user) throws SQLException {
         String updateString = "INSERT INTO Users(userName,password,firstName,lastName,email,birthDate)" +
-                " VALUES('" + user.getUsername() + "', '" + user.getPassword() + "', '" + user.getFirstName() + "', '"
+                " VALUES('" + user.getUserName() + "', '" + user.getPassword() + "', '" + user.getFirstName() + "', '"
                 + user.getLastName() + "', '" + user.getEmail() + "', '" + user.getBirthDate() + "');";
 
         try {
@@ -44,7 +44,7 @@ public class DB_User {
             while (DBC.rs.next())
             {
                 user.setUserID(DBC.rs.getInt("userID"));
-                user.setUsername(DBC.rs.getString("userName"));
+                user.setUserName(DBC.rs.getString("userName"));
                 user.setPassword(DBC.rs.getString("password"));
                 user.setFirstName(DBC.rs.getString("firstName"));
                 user.setLastName(DBC.rs.getString("lastName"));
@@ -58,7 +58,7 @@ public class DB_User {
         }
         catch (Exception e) {
             System.out.println(e);
-            user.setUsername("NULL");
+            user.setUserName("NULL");
             DBC.con.close();
             return user;
         }
@@ -98,7 +98,7 @@ public class DB_User {
     }
 
     public int updateUser(User user) throws SQLException {
-        String updateString = "UPDATE Users SET userName = '" + user.getUsername() +
+        String updateString = "UPDATE Users SET userName = '" + user.getUserName() +
                 "', firstName = '" + user.getFirstName() +
                 "', lastName = '" + user.getLastName() +
                 "', email = '" + user.getEmail() +

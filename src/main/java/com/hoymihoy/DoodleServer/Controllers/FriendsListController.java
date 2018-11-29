@@ -3,14 +3,13 @@ package com.hoymihoy.DoodleServer.Controllers;
 import com.hoymihoy.DoodleServer.DTOS.Painting;
 import com.hoymihoy.DoodleServer.DTOS.User;
 import com.hoymihoy.DoodleServer.Database.DB_FriendsList;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+@CrossOrigin
+@RestController
 public class FriendsListController {
 
     DB_FriendsList DBFL = new DB_FriendsList();

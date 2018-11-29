@@ -2,15 +2,15 @@ package com.hoymihoy.DoodleServer.DTOS;
 
 
 public class SecureUserLogin {
-    private String username;
+    private String userName;
     private String password;
 
     public String getUserName() {
-        return username;
+        return userName;
     }
 
     public void setUserName(String userName) {
-        this.username = userName;
+        this.userName = userName;
     }
 
     public String getPassword() {

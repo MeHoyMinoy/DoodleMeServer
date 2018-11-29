@@ -1,5 +1,6 @@
 package com.hoymihoy.DoodleServer.Controllers;
 
+import com.hoymihoy.DoodleServer.DTOS.Game;
 import com.hoymihoy.DoodleServer.DTOS.Painting;
 import com.hoymihoy.DoodleServer.DTOS.User;
 import com.hoymihoy.DoodleServer.Database.DBConnector;
@@ -9,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+@CrossOrigin
+@RestController
 public class PaintingsController {
 
     DB_Paintings DBP = new DB_Paintings();
@@ -52,7 +55,7 @@ public class PaintingsController {
     }
 
     @CrossOrigin
-    @GetMapping(path = "/GetPainting")
+    @PostMapping(path = "/GetPainting")
     public Painting GetPainting(@RequestParam(value = "painting") int paintingID) throws SQLException {
         Painting p = DBP.queryPaintingID(paintingID);
 
@@ -60,9 +63,19 @@ public class PaintingsController {
     }
 
     @CrossOrigin
-    @GetMapping(path = "/getUserPaintings")
+    @PostMapping(path = "/GetFeed")
     public ArrayList<Painting> queryUserPaintings(@RequestBody User user) throws SQLException {
         ArrayList<Painting> userPaintings = DBP.getUserPaintings(user);
         return userPaintings;
+    }
+
+    @CrossOrigin
+    @PostMapping(path = "/CreateGroup")
+    public int CreateNewGroup(@RequestBody Game newGame) throws SQLException {
+        // createNewGame() returns the number of rows added to UserPaintings
+        // This is equal to the number of people added to a game
+        // Will return -1 if an error has occurred
+        int result = DBP.createNewGame(newGame);
+        return result;
     }
 }

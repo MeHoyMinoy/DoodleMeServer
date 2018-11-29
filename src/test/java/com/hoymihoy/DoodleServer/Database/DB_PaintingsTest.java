@@ -8,10 +8,7 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import java.awt.*;
 import java.util.ArrayList;
-
-import static org.junit.Assert.*;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class DB_PaintingsTest {
@@ -120,25 +117,25 @@ public class DB_PaintingsTest {
         g.setPainting(p);
 
         u.setUserID(1);
-        u.setUsername("username1");
+        u.setUserName("username1");
         u.setPassword("password");
         players.add(u);
 
         u = new User();
         u.setUserID(2);
-        u.setUsername("username2");
+        u.setUserName("username2");
         u.setPassword("password");
         players.add(u);
 
         u = new User();
         u.setUserID(3);
-        u.setUsername("username3");
+        u.setUserName("username3");
         u.setPassword("password");
         players.add(u);
 
         u = new User();
         u.setUserID(4);
-        u.setUsername("username4");
+        u.setUserName("username4");
         u.setPassword("password");
         players.add(u);
 

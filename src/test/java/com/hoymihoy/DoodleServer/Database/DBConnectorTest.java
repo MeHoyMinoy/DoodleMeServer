@@ -29,7 +29,7 @@ public class DBConnectorTest {
 
         testUser.setFirstName("Devon");
         testUser.setLastName("Graves");
-        testUser.setUsername("dhg5054");
+        testUser.setUserName("dhg5054");
         testUser.setEmail("dhg5054@psu.edu");
         testUser.setPassword("password");
         testUser.setBirthDate(java.sql.Date.valueOf("1995-09-16"));
@@ -44,7 +44,7 @@ public class DBConnectorTest {
 
         testUser.setFirstName("Devon");
         testUser.setLastName("Graves");
-        testUser.setUsername("dhg5054");
+        testUser.setUserName("dhg5054");
         testUser.setEmail("dhg5054@psu.edu");
         testUser.setPassword("password");
         testUser.setBirthDate(java.sql.Date.valueOf("1995-09-16"));
@@ -59,7 +59,7 @@ public class DBConnectorTest {
 
         user = DBU.queryUserID(1);
 
-        String userName = user.getUsername();
+        String userName = user.getUserName();
 
         Assert.assertEquals("dhg5054", userName);
     }
@@ -71,7 +71,7 @@ public class DBConnectorTest {
 
         user = DBU.queryUserID(5);
 
-        String userName = user.getUsername();
+        String userName = user.getUserName();
 
         Assert.assertEquals(null, userName);
     }
@@ -104,7 +104,7 @@ public class DBConnectorTest {
         User user = new User();
 
         user.setUserID(1);
-        user.setUsername("newUserName");
+        user.setUserName("newUserName");
         user.setFirstName("New");
         user.setLastName("Name");
         user.setEmail("newName@osu.edu");
@@ -119,7 +119,7 @@ public class DBConnectorTest {
         User user = new User();
 
         user.setUserID(2);
-        user.setUsername("newUserName");
+        user.setUserName("newUserName");
         user.setFirstName("New");
         user.setLastName("Name");
         user.setEmail("newName@osu.edu");

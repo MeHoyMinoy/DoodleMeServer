@@ -16,10 +16,10 @@ public class UserController {
     public UserController() throws SQLException {
 
         User AdminTest = new User();
-        AdminTest.setUsername("Admin");
+        AdminTest.setUserName("Admin");
         AdminTest.setPassword("AdminPass");
         User UserTest = new User();
-        UserTest.setUsername("Bob");
+        UserTest.setUserName("Bob");
         UserTest.setPassword("Jerry");
         UserTest.setFirstName("Bob");
         UserTest.setLastName("Jones");
@@ -86,7 +86,7 @@ public class UserController {
     }
 
     @CrossOrigin
-    @GetMapping (path = "/GetUserData")
+    @PostMapping (path = "/GetUserData")
     public User GetUserData(@RequestParam(value = "user") int user) throws SQLException {
         User userObject = DBU.queryUserID(user);
 

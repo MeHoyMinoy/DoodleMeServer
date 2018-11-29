@@ -1021,8 +1021,8 @@
       <DataType>date|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="251" parent="232" name="userID">
-      <ColNames>userID</ColNames>
+    <index id="251" parent="232" name="userName">
+      <ColNames>userName</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
@@ -1031,9 +1031,9 @@
       <ColNames>userID</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="253" parent="232" name="userID">
-      <ColNames>userID</ColNames>
-      <UnderlyingIndexName>userID</UnderlyingIndexName>
+    <key id="253" parent="232" name="userName">
+      <ColNames>userName</ColNames>
+      <UnderlyingIndexName>userName</UnderlyingIndexName>
     </key>
   </database-model>
 </dataSource>

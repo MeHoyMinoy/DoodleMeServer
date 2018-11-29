@@ -158,7 +158,7 @@ public class DB_Paintings {
             catch (Exception e) {
                 System.out.println(e);
                 DBC.con.close();
-                return addedRows;
+                return -1;
             }
             finally {
                 if (DBC.stmt != null)
