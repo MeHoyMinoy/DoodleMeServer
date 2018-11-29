@@ -1,6 +1,5 @@
 package com.hoymihoy.DoodleServer.Database;
 
-import ch.qos.logback.core.db.dialect.DBUtil;
 import com.hoymihoy.DoodleServer.DTOS.SecureUserLogin;
 import com.hoymihoy.DoodleServer.DTOS.User;
 import org.junit.Assert;
@@ -28,12 +27,12 @@ public class DBConnectorTest {
         DB_User DBU = new DB_User();
         User testUser = new User();
 
-        testUser.setFirstname("Devon");
-        testUser.setLastname("Graves");
+        testUser.setFirstName("Devon");
+        testUser.setLastName("Graves");
         testUser.setUsername("dhg5054");
         testUser.setEmail("dhg5054@psu.edu");
         testUser.setPassword("password");
-        testUser.setBirthdate(java.sql.Date.valueOf("1995-09-16"));
+        testUser.setBirthDate(java.sql.Date.valueOf("1995-09-16"));
 
         Assert.assertEquals(1, DBU.createNewUser(testUser));
     }
@@ -43,12 +42,12 @@ public class DBConnectorTest {
         DB_User DBU = new DB_User();
         User testUser = new User();
 
-        testUser.setFirstname("Devon");
-        testUser.setLastname("Graves");
+        testUser.setFirstName("Devon");
+        testUser.setLastName("Graves");
         testUser.setUsername("dhg5054");
         testUser.setEmail("dhg5054@psu.edu");
         testUser.setPassword("password");
-        testUser.setBirthdate(java.sql.Date.valueOf("1995-09-16"));
+        testUser.setBirthDate(java.sql.Date.valueOf("1995-09-16"));
 
         Assert.assertEquals(-1, DBU.createNewUser(testUser));
     }
@@ -56,7 +55,7 @@ public class DBConnectorTest {
     @Test
     public void t06QueryUsernameTestPass() throws Exception {
         DB_User DBU = new DB_User();
-        User user = new User();
+        User user;
 
         user = DBU.queryUserID(1);
 
@@ -104,12 +103,12 @@ public class DBConnectorTest {
 
         User user = new User();
 
-
+        user.setUserID(1);
         user.setUsername("newUserName");
-        user.setFirstname("New");
-        user.setLastname("Name");
+        user.setFirstName("New");
+        user.setLastName("Name");
         user.setEmail("newName@osu.edu");
-        user.setBirthdate(java.sql.Date.valueOf("1999-01-31"));
+        user.setBirthDate(java.sql.Date.valueOf("1999-01-31"));
 
         Assert.assertEquals(1, DBU.updateUser(user));
     }
@@ -119,12 +118,12 @@ public class DBConnectorTest {
 
         User user = new User();
 
-
+        user.setUserID(2);
         user.setUsername("newUserName");
-        user.setFirstname("New");
-        user.setLastname("Name");
+        user.setFirstName("New");
+        user.setLastName("Name");
         user.setEmail("newName@osu.edu");
-        user.setBirthdate(java.sql.Date.valueOf("1999-01-31"));
+        user.setBirthDate(java.sql.Date.valueOf("1999-01-31"));
 
         Assert.assertEquals(0, DBU.updateUser(user));
     }

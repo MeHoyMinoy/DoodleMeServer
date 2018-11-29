@@ -10,9 +10,9 @@ public class DB_User {
     DBConnector DBC = new DBConnector();
 
     public int createNewUser(User user) throws SQLException {
-        String updateString = "INSERT INTO Users(userName,password,first_name,last_name,email,birthDate)" +
-                " VALUES('" + user.getUsername() + "', '" + user.getPassword() + "', '" + user.getFirstname() + "', '"
-                + user.getLastname() + "', '" + user.getEmail() + "', '" + user.getBirthdate() + "');";
+        String updateString = "INSERT INTO Users(userName,password,firstName,lastName,email,birthDate)" +
+                " VALUES('" + user.getUsername() + "', '" + user.getPassword() + "', '" + user.getFirstName() + "', '"
+                + user.getLastName() + "', '" + user.getEmail() + "', '" + user.getBirthDate() + "');";
 
         try {
             DBC.con = DBC.initializeConnection();
@@ -33,7 +33,7 @@ public class DB_User {
     }
 
     public User queryUserID(int userID) throws SQLException {
-        String queryString = "SELECT * FROM Users WHERE userID = '" + userID + "';";
+        String queryString = "SELECT * FROM Users WHERE userID = " + userID + ";";
         User user = new User();
 
         try {
@@ -46,9 +46,10 @@ public class DB_User {
                 user.setUserID(DBC.rs.getInt("userID"));
                 user.setUsername(DBC.rs.getString("userName"));
                 user.setPassword(DBC.rs.getString("password"));
-                user.setFirstname(DBC.rs.getString("first_name"));
-                user.setLastname(DBC.rs.getString("last_name"));
+                user.setFirstName(DBC.rs.getString("firstName"));
+                user.setLastName(DBC.rs.getString("lastName"));
                 user.setEmail(DBC.rs.getString("email"));
+                user.setBirthDate(DBC.rs.getDate("birthDate"));
             }
 
             DBC.con.close();
@@ -98,10 +99,10 @@ public class DB_User {
 
     public int updateUser(User user) throws SQLException {
         String updateString = "UPDATE Users SET userName = '" + user.getUsername() +
-                "', first_name = '" + user.getFirstname() +
-                "', last_name = '" + user.getLastname() +
+                "', firstName = '" + user.getFirstName() +
+                "', lastName = '" + user.getLastName() +
                 "', email = '" + user.getEmail() +
-                "', birthDate = '" + user.getBirthdate() +
+                "', birthDate = '" + user.getBirthDate() +
                 "' WHERE userID = " + user.getUserID();
         try {
             DBC.con = DBC.initializeConnection();

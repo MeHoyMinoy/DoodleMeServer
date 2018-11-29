@@ -21,8 +21,8 @@ public class UserController {
         User UserTest = new User();
         UserTest.setUsername("Bob");
         UserTest.setPassword("Jerry");
-        UserTest.setFirstname("Bob");
-        UserTest.setLastname("Jones");
+        UserTest.setFirstName("Bob");
+        UserTest.setLastName("Jones");
         UserTest.setEmail("bobjones123@gmail.com");
 
         DBU.createNewUser(AdminTest);

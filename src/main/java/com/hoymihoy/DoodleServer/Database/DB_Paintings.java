@@ -1,9 +1,11 @@
 package com.hoymihoy.DoodleServer.Database;
 
+import com.hoymihoy.DoodleServer.DTOS.Game;
 import com.hoymihoy.DoodleServer.DTOS.Painting;
 import com.hoymihoy.DoodleServer.DTOS.User;
 
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 public class DB_Paintings {
@@ -12,12 +14,12 @@ public class DB_Paintings {
 
     public int createNewPainting(Painting p) throws SQLException
     {
-        String updateString = "INSERT INTO Paintings(PaintingID, GameID, GameName, OwnerUserID, Image) " +
-                "VALUES(" + p.getPaintingID() + ", '" + p.getGameName() + "', " + p.getOwnerUserID() + ", '" + p.getImage() +"');";
+        String updateString = "INSERT INTO Paintings(GameName, OwnerUserID, Image) " +
+                "VALUES('" + p.getGameName() + "', " + p.getOwnerUserID() + ", '" + p.getImage() +"');";
         try {
             DBC.con = DBC.initializeConnection();
             DBC.stmt = DBC.con.createStatement();
-            int returnValue = DBC.stmt.executeUpdate(updateString);
+            int returnValue = DBC.stmt.executeUpdate(updateString, Statement.RETURN_GENERATED_KEYS);
             DBC.con.close();
             return returnValue;
         }
@@ -46,7 +48,7 @@ public class DB_Paintings {
             {
                 p.setPaintingID(DBC.rs.getInt("PaintingID"));
                 p.setGameName(DBC.rs.getString("GameName"));
-                p.setOwnerUserID(DBC.rs.getString("OwnerUserID"));
+                p.setOwnerUserID(DBC.rs.getInt("OwnerUserID"));
                 p.setImage(DBC.rs.getString("Image"));
             }
 
@@ -56,7 +58,10 @@ public class DB_Paintings {
         }
         catch (Exception e) {
             System.out.println(e);
-            p.setImage("NULL");
+            p.setImage(null);
+            p.setGameName(null);
+            p.setOwnerUserID(-1);
+            p.setPaintingID(-1);
             DBC.con.close();
             return p;
         }
@@ -68,10 +73,10 @@ public class DB_Paintings {
 
     public int updatePainting(Painting p) throws SQLException
     {
-        String updateString = "UPDATE Paintings SET " +
-                "GameName = " + p.getGameName() +
-                "Image = " + p.getImage() +
-                "WHERE PaintingID = " + p.getPaintingID();
+        String updateString = "UPDATE Paintings SET" +
+                " GameName = '" + p.getGameName() +
+                "', Image = '" + p.getImage() +
+                "' WHERE PaintingID = " + p.getPaintingID();
 
         try {
             DBC.con = DBC.initializeConnection();
@@ -97,8 +102,8 @@ public class DB_Paintings {
         ArrayList<Painting> paintings = new ArrayList<>();
 
         String queryString = "SELECT * " +
-                "FROM Paintings AS P" +
-                "JOIN UserPaintings AS UP ON UP.PaintingID = P.PaintingID" +
+                "FROM Paintings AS P " +
+                "JOIN UserPaintings AS UP ON UP.PaintingID = P.PaintingID " +
                 "WHERE UP.UserID = " + u.getUserID();
 
         try {
@@ -112,7 +117,7 @@ public class DB_Paintings {
 
                 p.setPaintingID(DBC.rs.getInt("PaintingID"));
                 p.setGameName(DBC.rs.getString("GameName"));
-                p.setOwnerUserID(DBC.rs.getString("OwnerUserID"));
+                p.setOwnerUserID(DBC.rs.getInt("OwnerUserID"));
                 p.setImage(DBC.rs.getString("Image"));
 
                 paintings.add(p);
@@ -132,4 +137,34 @@ public class DB_Paintings {
         }
     }
 
+    public int createNewGame(Game g) throws SQLException
+    {
+        String updateString;
+        int addedRows = 0;
+        int paintingID = createNewPainting(g.getPainting());
+
+        ArrayList<User> players = g.getPlayers();
+
+        for(int i = 0; i < players.size(); i++)
+        {
+            updateString = "INSERT INTO UserPaintings(PaintingID, UserID) " +
+                    "VALUES(" + paintingID + ", '" + players.get(i).getUserID() +"');";
+            try {
+                DBC.con = DBC.initializeConnection();
+                DBC.stmt = DBC.con.createStatement();
+                addedRows += DBC.stmt.executeUpdate(updateString);
+                DBC.con.close();
+            }
+            catch (Exception e) {
+                System.out.println(e);
+                DBC.con.close();
+                return addedRows;
+            }
+            finally {
+                if (DBC.stmt != null)
+                    {DBC.stmt.close();}
+            }
+        }
+        return addedRows;
+    }
 }

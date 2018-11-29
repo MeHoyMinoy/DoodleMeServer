@@ -48,7 +48,7 @@ public class DBConnector {
 
             stmt.executeUpdate("DROP TABLE Paintings");
 
-            stmt.executeUpdate("DROP TABLE Games");
+            stmt.executeUpdate("DROP TABLE UserPaintings");
         } 
         catch (Exception ex) {
             System.out.println(ex);
@@ -71,13 +71,12 @@ public class DBConnector {
             
             stmt.executeUpdate("create TABLE Users(" +
                     "userID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
-                    "userName VARCHAR(100) NOT NULL, " +
+                    "userName VARCHAR(100) NOT NULL UNIQUE, " +
                     "password VARCHAR(100) NOT NULL, " +
                     "firstName VARCHAR(100), " +
                     "lastName VARCHAR(100), " +
                     "email VARCHAR(100), " +
-                    "birthDate DATE," +
-                    "UNIQUE (userID))");
+                    "birthDate DATE)");
 
             stmt.executeUpdate("create TABLE FriendsList(" +
                     "FriendshipID INT NOT NULL AUTO_INCREMENT PRIMARY KEY," +
