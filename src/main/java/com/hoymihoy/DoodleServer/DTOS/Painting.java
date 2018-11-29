@@ -3,7 +3,7 @@ package com.hoymihoy.DoodleServer.DTOS;
 public class Painting {
     private int paintingID;
     private String gameName;
-    private int ownerUserID;
+    private String ownerUserName;
     private String image;
 
     public String getGameName() {
@@ -22,12 +22,12 @@ public class Painting {
         this.paintingID = paintingID;
     }
 
-    public int getOwnerUserID() {
-        return ownerUserID;
+    public String getOwnerUserName() {
+        return ownerUserName;
     }
 
-    public void setOwnerUserID(int ownerUserID) {
-        this.ownerUserID = ownerUserID;
+    public void setOwnerUserName(String ownerUserName) {
+        this.ownerUserName = ownerUserName;
     }
 
     public String getImage() {

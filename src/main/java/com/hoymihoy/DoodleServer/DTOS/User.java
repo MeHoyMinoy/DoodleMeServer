@@ -3,17 +3,12 @@ package com.hoymihoy.DoodleServer.DTOS;
 import java.sql.Date;
 
 public class User {
-    private int userID;
     private String userName;
     private String password;
     private String firstName;
     private String lastName;
     private Date birthDate;
     private String email;
-
-    public void setUserID(int userID) { this.userID = userID; }
-
-    public int getUserID() { return userID; }
 
     public String getUserName()
     {

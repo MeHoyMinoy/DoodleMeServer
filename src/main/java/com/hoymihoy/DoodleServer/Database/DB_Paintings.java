@@ -14,8 +14,8 @@ public class DB_Paintings {
 
     public int createNewPainting(Painting p) throws SQLException
     {
-        String updateString = "INSERT INTO Paintings(GameName, OwnerUserID, Image) " +
-                "VALUES('" + p.getGameName() + "', " + p.getOwnerUserID() + ", '" + p.getImage() +"');";
+        String updateString = "INSERT INTO Paintings(GameName, OwnerUserName, Image) " +
+                "VALUES('" + p.getGameName() + "', '" + p.getOwnerUserName() + "', '" + p.getImage() +"');";
         try {
             DBC.con = DBC.initializeConnection();
             DBC.stmt = DBC.con.createStatement();
@@ -48,7 +48,7 @@ public class DB_Paintings {
             {
                 p.setPaintingID(DBC.rs.getInt("PaintingID"));
                 p.setGameName(DBC.rs.getString("GameName"));
-                p.setOwnerUserID(DBC.rs.getInt("OwnerUserID"));
+                p.setOwnerUserName(DBC.rs.getString("OwnerUserName"));
                 p.setImage(DBC.rs.getString("Image"));
             }
 
@@ -60,7 +60,7 @@ public class DB_Paintings {
             System.out.println(e);
             p.setImage(null);
             p.setGameName(null);
-            p.setOwnerUserID(-1);
+            p.setOwnerUserName(null);
             p.setPaintingID(-1);
             DBC.con.close();
             return p;
@@ -104,7 +104,7 @@ public class DB_Paintings {
         String queryString = "SELECT * " +
                 "FROM Paintings AS P " +
                 "JOIN UserPaintings AS UP ON UP.PaintingID = P.PaintingID " +
-                "WHERE UP.UserID = " + u.getUserID();
+                "WHERE UP.userName = '" + u.getUserName() + "'";
 
         try {
             DBC.con = DBC.initializeConnection();
@@ -117,7 +117,7 @@ public class DB_Paintings {
 
                 p.setPaintingID(DBC.rs.getInt("PaintingID"));
                 p.setGameName(DBC.rs.getString("GameName"));
-                p.setOwnerUserID(DBC.rs.getInt("OwnerUserID"));
+                p.setOwnerUserName(DBC.rs.getString("OwnerUserName"));
                 p.setImage(DBC.rs.getString("Image"));
 
                 paintings.add(p);
@@ -147,8 +147,8 @@ public class DB_Paintings {
 
         for(int i = 0; i < players.size(); i++)
         {
-            updateString = "INSERT INTO UserPaintings(PaintingID, UserID) " +
-                    "VALUES(" + paintingID + ", '" + players.get(i).getUserID() +"');";
+            updateString = "INSERT INTO UserPaintings(PaintingID, UserName) " +
+                    "VALUES(" + paintingID + ", '" + players.get(i).getUserName() +"');";
             try {
                 DBC.con = DBC.initializeConnection();
                 DBC.stmt = DBC.con.createStatement();

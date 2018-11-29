@@ -33,16 +33,16 @@ public class UserController {
     @PostMapping (path =  "/Login")
     public int ReceiveLoginInformation(@RequestBody SecureUserLogin user)
     {
-        // If userID = -1, there was an error during the query
-        // If userID = 0, no record was found with the userName and password
-        // If userID = anything else, a userID with that userName and password was found
-        int userID = -1;
+        // If status = -1, there was an error during the query
+        // If status = 0, no record was found with the userName and password
+        // If status = 1, a userID with that userName and password was found
+        int status = -1;
         try {
-            userID = DBU.queryLoginCredentials(user);
-            return userID;
+            status = DBU.queryLoginCredentials(user);
+            return status;
         } catch (SQLException e) {
             e.printStackTrace();
-            return userID;
+            return status;
         }
     }
 
@@ -87,8 +87,8 @@ public class UserController {
 
     @CrossOrigin
     @PostMapping (path = "/GetUserData")
-    public User GetUserData(@RequestParam(value = "user") int user) throws SQLException {
-        User userObject = DBU.queryUserID(user);
+    public User GetUserData(@RequestParam(value = "user") String userName) throws SQLException {
+        User userObject = DBU.queryUserName(userName);
 
         return userObject;
     }

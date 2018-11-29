@@ -57,11 +57,12 @@ public class DBConnectorTest {
         DB_User DBU = new DB_User();
         User user;
 
-        user = DBU.queryUserID(1);
+        user = DBU.queryUserName("dhg5054");
 
         String userName = user.getUserName();
 
         Assert.assertEquals("dhg5054", userName);
+        Assert.assertEquals("Devon", user.getFirstName());
     }
 
     @Test
@@ -69,7 +70,7 @@ public class DBConnectorTest {
         DB_User DBU = new DB_User();
         User user;
 
-        user = DBU.queryUserID(5);
+        user = DBU.queryUserName("fakeUserName");
 
         String userName = user.getUserName();
 
@@ -103,8 +104,8 @@ public class DBConnectorTest {
 
         User user = new User();
 
-        user.setUserID(1);
-        user.setUserName("newUserName");
+
+        user.setUserName("dhg5054");
         user.setFirstName("New");
         user.setLastName("Name");
         user.setEmail("newName@osu.edu");
@@ -118,7 +119,6 @@ public class DBConnectorTest {
 
         User user = new User();
 
-        user.setUserID(2);
         user.setUserName("newUserName");
         user.setFirstName("New");
         user.setLastName("Name");

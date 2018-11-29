@@ -33,7 +33,7 @@ public class DB_PaintingsTest {
 
         p.setGameName("test game");
         p.setImage("image code here");
-        p.setOwnerUserID(1);
+        p.setOwnerUserName("dhg5054");
 
         Assert.assertEquals(1, DBP.createNewPainting(p));
     }
@@ -44,7 +44,7 @@ public class DB_PaintingsTest {
 
         p.setGameName("test game2");
         p.setImage("more image code here");
-        p.setOwnerUserID(1);
+        p.setOwnerUserName("dhg5054");
 
         Assert.assertEquals(1, DBP.createNewPainting(p));
     }
@@ -77,7 +77,7 @@ public class DB_PaintingsTest {
         Painting p = new Painting();
 
         p.setPaintingID(1);
-        p.setOwnerUserID(1);
+        p.setOwnerUserName("dhg5054");
         p.setGameName("updated game name");
         p.setImage("updated image text");
 
@@ -93,7 +93,7 @@ public class DB_PaintingsTest {
         Painting p = new Painting();
 
         p.setPaintingID(3);
-        p.setOwnerUserID(1);
+        p.setOwnerUserName("dhg5054");
         p.setGameName("Nothing to see here");
 
         Assert.assertEquals(0, DBP.updatePainting(p));
@@ -112,29 +112,26 @@ public class DB_PaintingsTest {
         int result;
 
         p.setImage("game image text");
-        p.setOwnerUserID(1);
+        p.setOwnerUserName("dhg5054");
         p.setGameName("game test");
         g.setPainting(p);
 
-        u.setUserID(1);
-        u.setUserName("username1");
+
+        u.setUserName("dhg5054");
         u.setPassword("password");
         players.add(u);
 
         u = new User();
-        u.setUserID(2);
         u.setUserName("username2");
         u.setPassword("password");
         players.add(u);
 
         u = new User();
-        u.setUserID(3);
         u.setUserName("username3");
         u.setPassword("password");
         players.add(u);
 
         u = new User();
-        u.setUserID(4);
         u.setUserName("username4");
         u.setPassword("password");
         players.add(u);
@@ -149,7 +146,7 @@ public class DB_PaintingsTest {
     @Test
     public void t09getUserPaintingTestPass() throws Exception {
         User u = new User();
-        u.setUserID(1);
+        u.setUserName("dhg5054");
         ArrayList<Painting> feed = new ArrayList<>(DBP.getUserPaintings(u));
 
         //Assert.assertEquals(1, feed.size());
@@ -158,7 +155,7 @@ public class DB_PaintingsTest {
         Painting p = new Painting();
         ArrayList<User> players = new ArrayList<>();
 
-        p.setOwnerUserID(1);
+        p.setOwnerUserName("dhg5054");
         players.add(u);
         g.setPainting(p);
         g.setPlayers(players);

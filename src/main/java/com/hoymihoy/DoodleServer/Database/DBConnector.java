@@ -70,8 +70,7 @@ public class DBConnector {
             stmt=con.createStatement();
             
             stmt.executeUpdate("create TABLE Users(" +
-                    "userID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
-                    "userName VARCHAR(100) NOT NULL UNIQUE, " +
+                    "userName VARCHAR(100) NOT NULL PRIMARY KEY, " +
                     "password VARCHAR(100) NOT NULL, " +
                     "firstName VARCHAR(100), " +
                     "lastName VARCHAR(100), " +
@@ -80,18 +79,18 @@ public class DBConnector {
 
             stmt.executeUpdate("create TABLE FriendsList(" +
                     "FriendshipID INT NOT NULL AUTO_INCREMENT PRIMARY KEY," +
-                    "FriendID_1 INT NOT NULL," +
-                    "FriendID_2 INT NOT NULL)");
+                    "FriendUserName_1 VARCHAR(100) NOT NULL," +
+                    "FriendUserName_2 VARCHAR(100) NOT NULL)");
 
             stmt.executeUpdate("create TABLE Paintings(" +
                     "PaintingID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
                     "GameName VARCHAR(100) NOT NULL," +
-                    "OwnerUserID INT NOT NULL, " +
+                    "OwnerUserName VARCHAR(100) NOT NULL, " +
                     "Image VARCHAR(500) NOT NULL)");
 
             stmt.executeUpdate("create TABLE UserPaintings(" +
                     "PaintingID INT NOT NULL, " +
-                    "UserID INT NOT NULL)");
+                    "userName VARCHAR(100) NOT NULL)");
         }
 
         catch (Exception ex) {

@@ -32,8 +32,8 @@ public class DB_User {
         }
     }
 
-    public User queryUserID(int userID) throws SQLException {
-        String queryString = "SELECT * FROM Users WHERE userID = " + userID + ";";
+    public User queryUserName(String userName) throws SQLException {
+        String queryString = "SELECT * FROM Users WHERE userName = '" + userName + "';";
         User user = new User();
 
         try {
@@ -43,7 +43,6 @@ public class DB_User {
 
             while (DBC.rs.next())
             {
-                user.setUserID(DBC.rs.getInt("userID"));
                 user.setUserName(DBC.rs.getString("userName"));
                 user.setPassword(DBC.rs.getString("password"));
                 user.setFirstName(DBC.rs.getString("firstName"));
@@ -69,9 +68,9 @@ public class DB_User {
     }
 
     public int queryLoginCredentials(SecureUserLogin sul) throws SQLException {
-        String queryString = "SELECT userID FROM Users WHERE userName = '" + sul.getUserName() + "' AND password = '" + sul.getPassword() + "'";
+        String queryString = "SELECT count(*) AS rows FROM Users WHERE userName = '" + sul.getUserName() + "' AND password = '" + sul.getPassword() + "'";
 
-        int userID = 0;
+        int rows = 0;
 
         try {
             DBC.con = DBC.initializeConnection();
@@ -79,9 +78,9 @@ public class DB_User {
             DBC.rs = DBC.stmt.executeQuery(queryString);
             while(DBC.rs.next())
             {
-                userID = DBC.rs.getInt("userID");
+                rows = DBC.rs.getInt("rows");
                 DBC.con.close();
-                return userID;
+                return rows;
             }
         }
         catch (Exception e) {
@@ -94,16 +93,16 @@ public class DB_User {
             {DBC.stmt.close();}
         }
 
-        return userID;
+        return rows;
     }
 
     public int updateUser(User user) throws SQLException {
-        String updateString = "UPDATE Users SET userName = '" + user.getUserName() +
-                "', firstName = '" + user.getFirstName() +
+        String updateString = "UPDATE Users SET "+
+                "firstName = '" + user.getFirstName() +
                 "', lastName = '" + user.getLastName() +
                 "', email = '" + user.getEmail() +
                 "', birthDate = '" + user.getBirthDate() +
-                "' WHERE userID = " + user.getUserID();
+                "' WHERE userName = '" + user.getUserName() +"'";
         try {
             DBC.con = DBC.initializeConnection();
             DBC.stmt = DBC.con.createStatement();
