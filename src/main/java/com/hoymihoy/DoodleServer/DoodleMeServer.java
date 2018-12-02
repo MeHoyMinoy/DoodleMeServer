@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class DoodleMeServer {
-    
+
     public static void main(String[] args) throws SQLException {
         DBConnector DBC = new DBConnector();
         DBC.dropAllTables();
@@ -20,7 +20,8 @@ public class DoodleMeServer {
     }
 
     public static void populateServer(){
-        DB_User DBU =   new DB_User();
+        DB_User DBU = new DB_User();
+        DB_FriendsList DBFL = new DB_FriendsList();
         User person = new User();
         SecureUserLogin SUL = new SecureUserLogin();
         try{
@@ -42,6 +43,21 @@ public class DoodleMeServer {
             person.setEmail("admin@gmail.com");
             DBU.createNewUser(person);
             /////////////////////////////////////
+
+            //Adding friends for user adp5384
+            String un = "adp5384";
+            DBFL.addFriendship(un, "admin1");
+            DBFL.addFriendship(un, "Elmo");
+            DBFL.addFriendship(un, "Grumpy Cat");
+            DBFL.addFriendship(un, "Is this loss?");
+            DBFL.addFriendship(un, "Bilbo Baggins");
+            DBFL.addFriendship(un, "Frodo Baggins");
+            DBFL.addFriendship(un, "Gandalf the Grey");
+            DBFL.addFriendship(un, "Gandalf the White");
+            DBFL.addFriendship(un, "General Kenobi");
+            DBFL.addFriendship(un, "General Grievous");
+            DBFL.addFriendship(un, "Count Douku");
+            DBFL.addFriendship(un, "Yoda the Green");
         } catch(Exception E){
         }
 //        //Populating FriendsList
