@@ -11,8 +11,8 @@ public class DB_FriendsList {
 
     public int addFriendship(String user1, String user2) throws SQLException
     {
-        String updateString = "INSERT INTO FriendsList(FriendID_1, FriendID_2)" +
-                "VALUES(" + user1 + ", " + user2 +")";
+        String updateString = "INSERT INTO FriendsList(UserName, FriendUserName)" +
+                "VALUES('" + user1 + "', '" + user2 +"')";
 
         try {
             DBC.con = DBC.initializeConnection();
