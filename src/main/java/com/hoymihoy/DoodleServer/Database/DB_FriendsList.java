@@ -13,8 +13,8 @@ public class DB_FriendsList {
     public int addFriendship(String user1, String user2) throws SQLException
     {
 
-/*        int userExists = queryUserExists(user1);          //check if user exists
-        int friendExists = queryFriendExists(user2);       //check if friend exists
+        int userExists = queryUserExists(user2);          //check if user exists
+          int friendExists = queryFriendExists(user1, user2);       //check if friend exists
 
         if(userExists == 0) {
             return 2;       //user doesn't exists
@@ -26,7 +26,7 @@ public class DB_FriendsList {
             return 3;       //friend does exists
         } else if(friendExists == -1){
             return -1;      //error
-        }*/
+        }
 
         String updateString = "INSERT INTO FriendsList(UserName, FriendUserName)" +
                     "VALUES('" + user1 + "', '" + user2 +"')";
@@ -85,12 +85,12 @@ public class DB_FriendsList {
     //Function returns 1 for if user already is in friendsList
     //Function return 0 for if user is not in friendsList
     //Function return -1 if Exception was thrown
-    public int queryFriendExists(String userName)
+    public int queryFriendExists(String User1, String User2)
     {
         ArrayList<String> friends;
         try {
-            friends = this.queryFriendsList(userName);
-            if(friends.contains(userName)){
+            friends = queryFriendsList(User1);
+            if(friends.contains(User2)){
                 return 1;       //User in friendsList
             } else{
                 return 0;       //No user in friendsList
