@@ -31,9 +31,18 @@ public class DB_PaintingsTest {
     public void t02CreateNewPaintingTestPass() throws Exception {
         Painting p = new Painting();
 
+        ArrayList<String> players = new ArrayList<>();
+
+        players.add("dhg5054");
+        players.add("username1");
+        players.add("username2");
+
+        p.setPlayers(players);
+
         p.setGameName("test game");
         p.setImage("image code here");
         p.setOwnerUserName("dhg5054");
+
 
         Assert.assertEquals(1, DBP.createNewPainting(p));
     }
@@ -42,11 +51,19 @@ public class DB_PaintingsTest {
     public void t03CreateNewPaintingSameUserPass() throws Exception {
         Painting p = new Painting();
 
+        ArrayList<String> players = new ArrayList<>();
+
+        players.add("dhg5054");
+        players.add("username1");
+        players.add("username2");
+
+        p.setPlayers(players);
+
         p.setGameName("test game2");
         p.setImage("more image code here");
         p.setOwnerUserName("dhg5054");
 
-        Assert.assertEquals(1, DBP.createNewPainting(p));
+        Assert.assertEquals(2, DBP.createNewPainting(p));
     }
 
     @Test
@@ -104,67 +121,51 @@ public class DB_PaintingsTest {
     }
 
     @Test
-    public void t08createGameTestPass() throws Exception {
+    public void t08setUserPaintingsTestPass() throws Exception {
         Painting p = new Painting();
-        PaintingUsers g = new PaintingUsers();
-        User u = new User();
-        ArrayList<User> players = new ArrayList<User>();
-        int result;
 
-        
+        ArrayList<String> players = new ArrayList<>();
+
+
         p.setImage("game image text");
         p.setOwnerUserName("dhg5054");
         p.setGameName("game test");
-        g.setPaintingID(p);
 
+        players.add("dhg5054");
 
-        u.setUserName("dhg5054");
-        u.setPassword("password");
-        players.add(u);
+        players.add("username2");
 
-        u = new User();
-        u.setUserName("username2");
-        u.setPassword("password");
-        players.add(u);
+        players.add("username3");
 
-        u = new User();
-        u.setUserName("username3");
-        u.setPassword("password");
-        players.add(u);
+        players.add("username4");
 
-        u = new User();
-        u.setUserName("username4");
-        u.setPassword("password");
-        players.add(u);
+        p.setPlayers(players);
 
-        g.setPlayerNames(players);
+        int result = DBP.createNewPainting(p);
 
-        result = DBP.createNewGame(g);
-
-        Assert.assertEquals(4, result);
+        Assert.assertEquals(3, result);
     }
 
     @Test
     public void t09getUserPaintingTestPass() throws Exception {
-        User u = new User();
-        u.setUserName("dhg5054");
-        ArrayList<Painting> feed = new ArrayList<>(DBP.getUserPaintings(u));
+        String userName = "dhg5054";
+        ArrayList<Painting> feed = new ArrayList<>(DBP.getUserPaintings(userName));
 
-        //Assert.assertEquals(1, feed.size());
+        Assert.assertEquals(3, feed.size());
 
-        PaintingUsers g = new PaintingUsers();
+
         Painting p = new Painting();
-        ArrayList<User> players = new ArrayList<>();
+        ArrayList<String> players = new ArrayList<>();
 
         p.setOwnerUserName("dhg5054");
-        players.add(u);
-        g.setPaintingID(p);
-        g.setPlayerNames(players);
+        p.setImage("testing image again");
+        players.add(userName);
+        p.setPlayers(players);
 
-        DBP.createNewGame(g);
+        DBP.createNewPainting(p);
 
-        ArrayList<Painting> feed2 = new ArrayList<>(DBP.getUserPaintings(u));
+        ArrayList<Painting> feed2 = new ArrayList<>(DBP.getUserPaintings("dhg5054"));
 
-        Assert.assertEquals(2, feed2.size());
+        Assert.assertEquals(4, feed2.size());
     }
 }

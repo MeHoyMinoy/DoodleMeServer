@@ -9,6 +9,7 @@ public class DBConnector {
     public Connection con;
     public Statement stmt;
     public ResultSet rs;
+    public PreparedStatement pstmt;
     private String DBUsername = "admin";
     private String DBPassword = "DoodleMe";
     private String jdbcUrl = String.format(
