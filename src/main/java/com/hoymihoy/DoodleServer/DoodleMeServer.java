@@ -52,7 +52,7 @@ public class DoodleMeServer {
 //            DBP.createNewPainting(p);
 //        } catch(Exception E){
 //        }
-//        DB_FriendsList DBF =   new DB_FriendsList();
+        DB_FriendsList DBF =   new DB_FriendsList();
 //        DBConnector DBUP =   new DBConnector();
 
     }
