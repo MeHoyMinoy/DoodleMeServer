@@ -23,9 +23,13 @@ public class DB_Paintings {
                 "VALUES('" + p.getGameName() + "', '" + p.getOwnerUserName() + "', '" + p.getImage() +"', '" + p.getCurrentPlayerUserName() + "', " + p.getCurrentPlayerSpot() + ")";
         try {
             DBC.con = DBC.initializeConnection();
-            DBC.stmt = DBC.con.createStatement();
-            int returnValue = DBC.stmt.executeUpdate(updateString, Statement.RETURN_GENERATED_KEYS);
-            PaintingUsers pu = new PaintingUsers();
+            DBC.pstmt = DBC.con.prepareStatement(updateString, Statement.RETURN_GENERATED_KEYS);
+            DBC.pstmt.executeUpdate();
+            DBC.rs = DBC.pstmt.getGeneratedKeys();
+            DBC.rs.next();
+            int returnValue = DBC.rs.getInt(1);
+            PaintingUsers pu = new PaintingUsers(returnValue, p.getPlayers());
+            createNewGame(pu);
             DBC.con.close();
             return returnValue;
         }
@@ -35,8 +39,8 @@ public class DB_Paintings {
             return -1;
         }
         finally {
-            if (DBC.stmt != null)
-            {DBC.stmt.close();}
+            if (DBC.pstmt != null)
+            {DBC.pstmt.close();}
         }
     }
     public Blob convertImage(String input){
