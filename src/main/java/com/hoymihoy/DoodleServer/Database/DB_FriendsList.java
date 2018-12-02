@@ -12,11 +12,26 @@ public class DB_FriendsList {
 
     public int addFriendship(String user1, String user2) throws SQLException
     {
-        //check if user exists
-        //check if friend exists
+
+        int userExists = queryUserExists("user2");          //check if user exists
+        int friendExists = queryFriendExists("user2");       //check if friend exists
+
+        if(userExists == 0) {
+            return 2;       //user doesn't exists
+        } else if(userExists == -1){
+            return -1;      //error
+        }
+
+        if(friendExists == 1) {
+            return 3;       //friend does exists
+        } else if(friendExists == -1){
+            return -1;      //error
+        }
 
         String updateString = "INSERT INTO FriendsList(FriendID_1, FriendID_2)" +
-                "VALUES(" + user1 + ", " + user2 +")";
+                    "VALUES(" + user1 + ", " + user2 +")";
+
+
 
         try {
             DBC.con = DBC.initializeConnection();
