@@ -44,7 +44,6 @@ public class DB_User {
             while (DBC.rs.next())
             {
                 user.setUserName(DBC.rs.getString("userName"));
-                user.setPassword(DBC.rs.getString("password"));
                 user.setFirstName(DBC.rs.getString("firstName"));
                 user.setLastName(DBC.rs.getString("lastName"));
                 user.setEmail(DBC.rs.getString("email"));
@@ -121,4 +120,5 @@ public class DB_User {
             {DBC.stmt.close();}
         }
     }
+
 }

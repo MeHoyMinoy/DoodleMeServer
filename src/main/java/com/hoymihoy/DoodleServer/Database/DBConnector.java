@@ -78,9 +78,8 @@ public class DBConnector {
                     "birthDate DATE)");
 
             stmt.executeUpdate("create TABLE FriendsList(" +
-                    "FriendshipID INT NOT NULL AUTO_INCREMENT PRIMARY KEY," +
-                    "FriendUserName_1 VARCHAR(100) NOT NULL," +
-                    "FriendUserName_2 VARCHAR(100) NOT NULL)");
+                    "UserName VARCHAR(100) NOT NULL," +
+                    "FriendUserName VARCHAR(100) NOT NULL)");
 
             stmt.executeUpdate("create TABLE Paintings(" +
                     "PaintingID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +

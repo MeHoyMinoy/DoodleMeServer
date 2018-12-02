@@ -5,6 +5,9 @@ import java.util.ArrayList;
 public class Game {
 
     private Painting painting;
+    private String gameName;
+    private String currentPlayerUserName;
+    private int currentPlayerSpot;
     private ArrayList<User> players;
 
     public Painting getPainting() {
