@@ -54,42 +54,4 @@ public class FriendsListController {
         }
     }
 
-    //Function returns 1 for if user already is in friendsList
-    //Function return 0 for if user is not in friendsList
-    //Function return -1 if Exception was thrown
-    public int queryFriendExists(@RequestParam (value = "userName") String userName)
-    {
-        ArrayList<String> friends;
-        try {
-            friends = DBFL.queryFriendsList(userName);
-            if(friends.contains(userName)){
-                return 1;       //User in friendsList
-            } else{
-                return 0;       //No user in friendsList
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            friends = new ArrayList<>();
-            return -1;
-        }
-    }
-
-
-    public int queryUserExists(@RequestParam (value = "userName") String userName)
-    {
-        DB_User DBU = new DB_User();
-        User user = new User();
-        try{
-            user = DBU.queryUserName(userName);
-            if(user.getUserName().contains(null)){
-                return 0;
-            }else{
-                return 1;
-            }
-        } catch(Exception E){
-            return -1;
-        }
-    }
-
 }

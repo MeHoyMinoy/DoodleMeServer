@@ -1,6 +1,7 @@
 package com.hoymihoy.DoodleServer.Database;
 
 import com.hoymihoy.DoodleServer.DTOS.User;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -11,6 +12,9 @@ public class DB_FriendsList {
 
     public int addFriendship(String user1, String user2) throws SQLException
     {
+        //check if user exists
+        //check if friend exists
+
         String updateString = "INSERT INTO FriendsList(FriendID_1, FriendID_2)" +
                 "VALUES(" + user1 + ", " + user2 +")";
 
@@ -64,5 +68,47 @@ public class DB_FriendsList {
             {DBC.stmt.close();}
         }
     }
+
+    //Function returns 1 for if user already is in friendsList
+    //Function return 0 for if user is not in friendsList
+    //Function return -1 if Exception was thrown
+    public int queryFriendExists(@RequestParam(value = "userName") String userName)
+    {
+        ArrayList<String> friends;
+        try {
+            friends = this.queryFriendsList(userName);
+            if(friends.contains(userName)){
+                return 1;       //User in friendsList
+            } else{
+                return 0;       //No user in friendsList
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            //friends = new ArrayList<>();
+            return -1;
+        }
+    }
+
+    //Function returns 1 for if user already exists
+    //Function return 0 for if user does not exists
+    //Function return -1 if Exception was thrown
+    public int queryUserExists(@RequestParam (value = "userName") String userName)
+    {
+        DB_User DBU = new DB_User();
+        User user = new User();
+        try{
+            user = DBU.queryUserName(userName);
+            if(user.getUserName().contains(null)){
+                return 0;
+            }else{
+                return 1;
+            }
+        } catch(Exception E){
+            return -1;
+        }
+    }
+
+
 
 }
