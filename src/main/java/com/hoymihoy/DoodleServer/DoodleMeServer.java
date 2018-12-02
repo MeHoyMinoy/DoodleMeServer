@@ -14,19 +14,19 @@ public class DoodleMeServer {
         DBConnector DBC = new DBConnector();
         DBC.dropAllTables();
         DBC.createTables();
-        SpringApplication.run(DoodleMeServer.class, args);
         populateServer();
+        SpringApplication.run(DoodleMeServer.class, args);
+
     }
 
     public static void populateServer(){
         DB_User DBU =   new DB_User();
         User person = new User();
-        Date d = new Date(9,16,1997);
         SecureUserLogin SUL = new SecureUserLogin();
         try{
             //Populating CreateUser
             /////////////////////////////////////
-            person.setBirthDate(d);
+            person.setBirthDate(java.sql.Date.valueOf("1997-09-16"));
             person.setUserName("admin");
             person.setPassword("admin");
             person.setFirstName("Ever");
@@ -46,7 +46,6 @@ public class DoodleMeServer {
 //        }
 //        DB_FriendsList DBF =   new DB_FriendsList();
 //        DBConnector DBUP =   new DBConnector();
-
 
     }
 
