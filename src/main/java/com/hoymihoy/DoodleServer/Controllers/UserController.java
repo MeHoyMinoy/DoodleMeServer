@@ -86,7 +86,7 @@ public class UserController {
     }
 
     @CrossOrigin
-    @PostMapping (path = "/GetUserData")
+    @GetMapping (path = "/GetUserData")
     public User GetUserData(@RequestParam(value = "user") String userName) throws SQLException {
         User userObject = DBU.queryUserName(userName);
 

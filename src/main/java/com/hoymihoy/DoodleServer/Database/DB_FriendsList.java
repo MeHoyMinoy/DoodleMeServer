@@ -31,8 +31,6 @@ public class DB_FriendsList {
         String updateString = "INSERT INTO FriendsList(FriendID_1, FriendID_2)" +
                     "VALUES(" + user1 + ", " + user2 +")";
 
-
-
         try {
             DBC.con = DBC.initializeConnection();
             DBC.stmt = DBC.con.createStatement();
