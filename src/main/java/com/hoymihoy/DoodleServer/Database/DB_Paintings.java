@@ -1,6 +1,6 @@
 package com.hoymihoy.DoodleServer.Database;
 
-import com.hoymihoy.DoodleServer.DTOS.Game;
+import com.hoymihoy.DoodleServer.DTOS.PaintingUsers;
 import com.hoymihoy.DoodleServer.DTOS.Painting;
 import com.hoymihoy.DoodleServer.DTOS.User;
 
@@ -14,12 +14,16 @@ public class DB_Paintings {
 
     public int createNewPainting(Painting p) throws SQLException
     {
-        String updateString = "INSERT INTO Paintings(GameName, OwnerUserName, Image) " +
-                "VALUES('" + p.getGameName() + "', '" + p.getOwnerUserName() + "', '" + p.getImage() +"');";
+        //String convertedImage = convertImage(p.getImage());
+        //p.setImage(convertedImage);
+
+        String updateString = "INSERT INTO Paintings(GameName, OwnerUserName, Image, CurrentPlayerUserName, CurrentPlayerSpot) " +
+                "VALUES('" + p.getGameName() + "', '" + p.getOwnerUserName() + "', '" + p.getImage() +"', '" + p.getCurrentPlayerUserName() + "', " + p.getCurrentPlayerSpot() + ")";
         try {
             DBC.con = DBC.initializeConnection();
             DBC.stmt = DBC.con.createStatement();
             int returnValue = DBC.stmt.executeUpdate(updateString, Statement.RETURN_GENERATED_KEYS);
+            PaintingUsers pu = new PaintingUsers();
             DBC.con.close();
             return returnValue;
         }
@@ -50,6 +54,8 @@ public class DB_Paintings {
                 p.setGameName(DBC.rs.getString("GameName"));
                 p.setOwnerUserName(DBC.rs.getString("OwnerUserName"));
                 p.setImage(DBC.rs.getString("Image"));
+                p.setCurrentPlayerUserName(DBC.rs.getString("CurrentPlayerUserName"));
+                p.setCurrentPlayerSpot(DBC.rs.getInt("CurrentPlayerSpot"));
             }
 
             DBC.con.close();
@@ -137,18 +143,18 @@ public class DB_Paintings {
         }
     }
 
-    public int createNewGame(Game g) throws SQLException
+    public int createNewGame(PaintingUsers pu) throws SQLException
     {
         String updateString;
         int addedRows = 0;
-        int paintingID = createNewPainting(g.getPainting());
+        int paintingID = pu.getPaintingID();
 
-        ArrayList<User> players = g.getPlayers();
+        ArrayList<String> players = pu.getPlayerNames();
 
         for(int i = 0; i < players.size(); i++)
         {
             updateString = "INSERT INTO UserPaintings(PaintingID, UserName) " +
-                    "VALUES(" + paintingID + ", '" + players.get(i).getUserName() +"');";
+                    "VALUES(" + paintingID + ", '" + players.get(i) +"');";
             try {
                 DBC.con = DBC.initializeConnection();
                 DBC.stmt = DBC.con.createStatement();

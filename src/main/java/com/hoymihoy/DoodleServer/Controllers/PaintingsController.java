@@ -1,9 +1,8 @@
 package com.hoymihoy.DoodleServer.Controllers;
 
-import com.hoymihoy.DoodleServer.DTOS.Game;
+import com.hoymihoy.DoodleServer.DTOS.PaintingUsers;
 import com.hoymihoy.DoodleServer.DTOS.Painting;
 import com.hoymihoy.DoodleServer.DTOS.User;
-import com.hoymihoy.DoodleServer.Database.DBConnector;
 import com.hoymihoy.DoodleServer.Database.DB_Paintings;
 import org.springframework.web.bind.annotation.*;
 
@@ -71,11 +70,11 @@ public class PaintingsController {
 
     @CrossOrigin
     @PostMapping(path = "/CreateGroup")
-    public int CreateNewGroup(@RequestBody Game newGame) throws SQLException {
+    public int CreateNewGroup(@RequestBody PaintingUsers newPaintingUsers) throws SQLException {
         // createNewGame() returns the number of rows added to UserPaintings
         // This is equal to the number of people added to a game
         // Will return -1 if an error has occurred
-        int result = DBP.createNewGame(newGame);
+        int result = DBP.createNewGame(newPaintingUsers);
         return result;
     }
 }

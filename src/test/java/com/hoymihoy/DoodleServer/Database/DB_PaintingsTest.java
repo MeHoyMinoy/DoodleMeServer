@@ -1,6 +1,6 @@
 package com.hoymihoy.DoodleServer.Database;
 
-import com.hoymihoy.DoodleServer.DTOS.Game;
+import com.hoymihoy.DoodleServer.DTOS.PaintingUsers;
 import com.hoymihoy.DoodleServer.DTOS.Painting;
 import com.hoymihoy.DoodleServer.DTOS.User;
 import org.junit.Assert;
@@ -106,15 +106,16 @@ public class DB_PaintingsTest {
     @Test
     public void t08createGameTestPass() throws Exception {
         Painting p = new Painting();
-        Game g = new Game();
+        PaintingUsers g = new PaintingUsers();
         User u = new User();
         ArrayList<User> players = new ArrayList<User>();
         int result;
 
+        
         p.setImage("game image text");
         p.setOwnerUserName("dhg5054");
         p.setGameName("game test");
-        g.setPainting(p);
+        g.setPaintingID(p);
 
 
         u.setUserName("dhg5054");
@@ -136,7 +137,7 @@ public class DB_PaintingsTest {
         u.setPassword("password");
         players.add(u);
 
-        g.setPlayers(players);
+        g.setPlayerNames(players);
 
         result = DBP.createNewGame(g);
 
@@ -151,14 +152,14 @@ public class DB_PaintingsTest {
 
         //Assert.assertEquals(1, feed.size());
 
-        Game g = new Game();
+        PaintingUsers g = new PaintingUsers();
         Painting p = new Painting();
         ArrayList<User> players = new ArrayList<>();
 
         p.setOwnerUserName("dhg5054");
         players.add(u);
-        g.setPainting(p);
-        g.setPlayers(players);
+        g.setPaintingID(p);
+        g.setPlayerNames(players);
 
         DBP.createNewGame(g);
 
