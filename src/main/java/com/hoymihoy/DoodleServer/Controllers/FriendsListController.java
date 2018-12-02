@@ -41,7 +41,7 @@ public class FriendsListController {
 
     @CrossOrigin
     @GetMapping(path = "/GetFriendsList")
-    public ArrayList<String> GetFriendsList(@RequestParam (value = "userName") String userName)
+    public ArrayList<String> GetFriendsList(@RequestParam (value = "user") String userName)
     {
         ArrayList<String> friends;
         try {

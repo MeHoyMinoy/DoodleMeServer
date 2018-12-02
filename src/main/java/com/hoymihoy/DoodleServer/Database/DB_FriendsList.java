@@ -13,8 +13,8 @@ public class DB_FriendsList {
     public int addFriendship(String user1, String user2) throws SQLException
     {
 
-        int userExists = queryUserExists("user2");          //check if user exists
-        int friendExists = queryFriendExists("user2");       //check if friend exists
+/*        int userExists = queryUserExists(user1);          //check if user exists
+        int friendExists = queryFriendExists(user2);       //check if friend exists
 
         if(userExists == 0) {
             return 2;       //user doesn't exists
@@ -26,10 +26,10 @@ public class DB_FriendsList {
             return 3;       //friend does exists
         } else if(friendExists == -1){
             return -1;      //error
-        }
+        }*/
 
-        String updateString = "INSERT INTO FriendsList(FriendID_1, FriendID_2)" +
-                    "VALUES(" + user1 + ", " + user2 +")";
+        String updateString = "INSERT INTO FriendsList(UserName, FriendUserName)" +
+                    "VALUES('" + user1 + "', '" + user2 +"')";
 
         try {
             DBC.con = DBC.initializeConnection();
@@ -85,7 +85,7 @@ public class DB_FriendsList {
     //Function returns 1 for if user already is in friendsList
     //Function return 0 for if user is not in friendsList
     //Function return -1 if Exception was thrown
-    public int queryFriendExists(@RequestParam(value = "userName") String userName)
+    public int queryFriendExists(String userName)
     {
         ArrayList<String> friends;
         try {
@@ -106,7 +106,7 @@ public class DB_FriendsList {
     //Function returns 1 for if user already exists
     //Function return 0 for if user does not exists
     //Function return -1 if Exception was thrown
-    public int queryUserExists(@RequestParam (value = "userName") String userName)
+    public int queryUserExists(String userName)
     {
         DB_User DBU = new DB_User();
         User user = new User();
