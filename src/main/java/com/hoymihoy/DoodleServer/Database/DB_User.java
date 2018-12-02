@@ -33,7 +33,7 @@ public class DB_User {
     }
 
     public User queryUserName(String userName) throws SQLException {
-        String queryString = "SELECT * FROM Users WHERE userName = '" + userName + "';";
+        String queryString = "SELECT * FROM Users WHERE userName = '" + userName + "'";
         User user = new User();
 
         try {
@@ -56,7 +56,7 @@ public class DB_User {
         }
         catch (Exception e) {
             System.out.println(e);
-            user.setUserName("NULL");
+            user.setUserName(null);
             DBC.con.close();
             return user;
         }

@@ -10,16 +10,19 @@ public class DB_FriendsList {
 
     DBConnector DBC = new DBConnector();
 
+    // User 1 is the person making the friendship request
+    // User 2 is the person being added
     public int addFriendship(String user1, String user2) throws SQLException
     {
 
         int userExists = queryUserExists(user2);          //check if user exists
-          int friendExists = queryFriendExists(user1, user2);       //check if friend exists
+        int friendExists = queryFriendExists(user1, user2);       //check if friend exists
 
         if(userExists == 0) {
             return 2;       //user doesn't exists
+
         } else if(userExists == -1){
-            return -1;      //error
+            return -2;      //error
         }
 
         if(friendExists == 1) {
@@ -112,7 +115,7 @@ public class DB_FriendsList {
         User user = new User();
         try{
             user = DBU.queryUserName(userName);
-            if(user.getUserName().contains(null)){
+            if(user.getUserName() == null){
                 return 0;
             }else{
                 return 1;

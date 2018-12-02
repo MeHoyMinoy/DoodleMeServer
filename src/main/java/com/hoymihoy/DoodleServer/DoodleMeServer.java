@@ -36,10 +36,18 @@ public class DoodleMeServer {
             DBU.createNewUser(person);
 
             person.setBirthDate(java.sql.Date.valueOf("1997-09-16"));
-            person.setUserName("admin");
+            person.setUserName("admin1");
             person.setPassword("admin");
-            person.setFirstName("Ever");
-            person.setLastName("Greatest");
+            person.setFirstName("Dont");
+            person.setLastName("Dead");
+            person.setEmail("admin@gmail.com");
+            DBU.createNewUser(person);
+
+            person.setBirthDate(java.sql.Date.valueOf("1997-09-16"));
+            person.setUserName("admin2");
+            person.setPassword("admin");
+            person.setFirstName("Open");
+            person.setLastName("Inside");
             person.setEmail("admin@gmail.com");
             DBU.createNewUser(person);
             /////////////////////////////////////
