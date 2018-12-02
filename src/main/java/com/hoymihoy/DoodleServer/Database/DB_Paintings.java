@@ -4,6 +4,8 @@ import com.hoymihoy.DoodleServer.DTOS.PaintingUsers;
 import com.hoymihoy.DoodleServer.DTOS.Painting;
 import com.hoymihoy.DoodleServer.DTOS.User;
 
+import javax.sql.rowset.serial.SerialBlob;
+import java.sql.Blob;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -14,8 +16,8 @@ public class DB_Paintings {
 
     public int createNewPainting(Painting p) throws SQLException
     {
-        //String convertedImage = convertImage(p.getImage());
-        //p.setImage(convertedImage);
+        Blob convertedImage = convertImage(p.getImage());
+        p.setConvertedImage(convertedImage);
 
         String updateString = "INSERT INTO Paintings(GameName, OwnerUserName, Image, CurrentPlayerUserName, CurrentPlayerSpot) " +
                 "VALUES('" + p.getGameName() + "', '" + p.getOwnerUserName() + "', '" + p.getImage() +"', '" + p.getCurrentPlayerUserName() + "', " + p.getCurrentPlayerSpot() + ")";
@@ -40,6 +42,17 @@ public class DB_Paintings {
             if (DBC.pstmt != null)
             {DBC.pstmt.close();}
         }
+    }
+    public Blob convertImage(String input){
+        Blob b = null;
+        //b = input.getBytes();
+        byte[] buff = input.getBytes();
+        try{
+            b = new SerialBlob(buff);
+        } catch(Exception E){
+
+        }
+        return b;
     }
 
     public Painting queryPaintingID(int paintingID) throws SQLException {
