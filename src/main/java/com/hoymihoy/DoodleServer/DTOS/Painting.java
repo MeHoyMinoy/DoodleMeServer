@@ -11,6 +11,29 @@ public class Painting {
     private int currentPlayerSpot;
     private ArrayList<String> players;
 
+    public String getCurrentPlayerUserName() {
+        return currentPlayerUserName;
+    }
+
+    public void setCurrentPlayerUserName(String currentPlayerUserName) {
+        this.currentPlayerUserName = currentPlayerUserName;
+    }
+
+    public int getCurrentPlayerSpot() {
+        return currentPlayerSpot;
+    }
+
+    public void setCurrentPlayerSpot(int currentPlayerSpot) {
+        this.currentPlayerSpot = currentPlayerSpot;
+    }
+
+    public ArrayList<String> getPlayers() {
+        return players;
+    }
+
+    public void setPlayers(ArrayList<String> players) {
+        this.players = players;
+    }
 
     public String getGameName() {
         return gameName;

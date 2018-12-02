@@ -18,14 +18,15 @@ public class FriendsListController {
 
     @CrossOrigin
     @PostMapping(path = "/addFriend")
-    public int CreateNewFriendship(@RequestBody User user1, User user2)
+    public int CreateNewFriendship(@RequestParam (value = "userName") String userName,
+                                   @RequestParam (value = "friendUserName") String friendUserName)
     {
         // If status = 0, there was an error while creating the query
         // If status = -1, there is already a friendship for those users
         // If status = 1, a new friendship was created
         int status = 0;
         try {
-            status = DBFL.addFriendship(user1, user2);
+            status = DBFL.addFriendship(userName, friendUserName);
             return status;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -47,8 +48,6 @@ public class FriendsListController {
             friends = new ArrayList<>();
             return friends;
         }
-
-
     }
 
 
