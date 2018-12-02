@@ -63,7 +63,7 @@ public class PaintingsController {
 
     @CrossOrigin
     @PostMapping(path = "/GetFeed")
-    public ArrayList<Painting> queryUserPaintings(@RequestBody User user) throws SQLException {
+    public ArrayList<Painting> queryUserPaintings(@RequestParam String user) throws SQLException {
         ArrayList<Painting> userPaintings = DBP.getUserPaintings(user);
         return userPaintings;
     }

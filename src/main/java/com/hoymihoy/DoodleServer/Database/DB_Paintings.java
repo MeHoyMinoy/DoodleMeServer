@@ -103,14 +103,14 @@ public class DB_Paintings {
         }
     }
 
-    public ArrayList<Painting> getUserPaintings(User u) throws SQLException
+    public ArrayList<Painting> getUserPaintings(String u) throws SQLException
     {
         ArrayList<Painting> paintings = new ArrayList<>();
 
         String queryString = "SELECT * " +
                 "FROM Paintings AS P " +
                 "JOIN UserPaintings AS UP ON UP.PaintingID = P.PaintingID " +
-                "WHERE UP.userName = '" + u.getUserName() + "'";
+                "WHERE UP.userName = '" + u + "'";
 
         try {
             DBC.con = DBC.initializeConnection();
