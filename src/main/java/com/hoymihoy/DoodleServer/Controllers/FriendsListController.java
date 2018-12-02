@@ -34,6 +34,22 @@ public class FriendsListController {
     }
 
 
+    @CrossOrigin
+    @PostMapping(path = "/getFriendsList")
+    public ArrayList<String> GetFriendsList(@RequestParam (value = "userName") String userName)
+    {
+        ArrayList<String> friends;
+        try {
+            friends = DBFL.queryFriendsList(userName);
+            return friends;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            friends = new ArrayList<>();
+            return friends;
+        }
+
+
+    }
 
 
 }
