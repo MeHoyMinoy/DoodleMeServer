@@ -11,15 +11,23 @@ public class DB_FriendsList {
 
     public int addFriendship(String user1, String user2) throws SQLException
     {
+        // This function will return a value indicating if the friendship was successful or not
+        // If result = 1, the friendship was successful
+        // If result = 2, the FriendUserName does not exist
+        // If result = 3, the friendship already exists
+        // If result = -1, some other error happened
+
+        int result = 0;
+
         String updateString = "INSERT INTO FriendsList(UserName, FriendUserName)" +
                 "VALUES('" + user1 + "', '" + user2 +"')";
 
         try {
             DBC.con = DBC.initializeConnection();
             DBC.stmt = DBC.con.createStatement();
-            int returnValue = DBC.stmt.executeUpdate(updateString);
+            result = DBC.stmt.executeUpdate(updateString);
             DBC.con.close();
-            return returnValue;
+            return result;
         }
         catch (Exception e) {
             System.out.println(e);

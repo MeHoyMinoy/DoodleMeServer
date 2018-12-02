@@ -27,12 +27,23 @@ public class DB_FriendsListTest {
     }
 
     @Test
-    public void t02GetFriendsTestPass() throws Exception
-    {
+    public void t02AddFriendTestPass() throws Exception {
         populateServer();
+        int result = DBFL.addFriendship("adp5384", "George Cermufflin");
+
+        Assert.assertEquals(1, result);
+
+        result = DBFL.addFriendship("adp5384", "Neil DeGrasse Tyson");
+
+        Assert.assertEquals(1, result);
+    }
+
+    @Test
+    public void t03GetFriendsTestPass() throws Exception
+    {
         ArrayList<String> friends = DBFL.queryFriendsList("adp5384");
 
-        Assert.assertEquals(12, friends.size());
+        Assert.assertEquals(14, friends.size());
     }
 
 }

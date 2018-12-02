@@ -54,7 +54,7 @@ public class PaintingsController {
     }
 
     @CrossOrigin
-    @PostMapping(path = "/GetPainting")
+    @GetMapping(path = "/GetPainting")
     public Painting GetPainting(@RequestParam(value = "painting") int paintingID) throws SQLException {
         Painting p = DBP.queryPaintingID(paintingID);
 
@@ -62,7 +62,7 @@ public class PaintingsController {
     }
 
     @CrossOrigin
-    @PostMapping(path = "/GetFeed")
+    @GetMapping(path = "/GetFeed")
     public ArrayList<Painting> queryUserPaintings(@RequestParam String user) throws SQLException {
         ArrayList<Painting> userPaintings = DBP.getUserPaintings(user);
         return userPaintings;
