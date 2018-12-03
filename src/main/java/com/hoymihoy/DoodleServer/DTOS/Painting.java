@@ -7,9 +7,6 @@ public class Painting {
     private String gameName;
     private String ownerUserName;
     private String image;
-
-
-
     private Blob convertedImage;
     private String currentPlayerUserName;
     private int currentPlayerSpot;

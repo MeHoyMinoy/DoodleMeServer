@@ -43,10 +43,11 @@ public class DB_Paintings {
             {DBC.pstmt.close();}
         }
     }
-    public Blob convertImage(String input){
+
+    public Blob convertImage(String image){
         Blob b = null;
         //b = input.getBytes();
-        byte[] buff = input.getBytes();
+        byte[] buff = image.getBytes();
         try{
             b = new SerialBlob(buff);
         } catch(Exception E){

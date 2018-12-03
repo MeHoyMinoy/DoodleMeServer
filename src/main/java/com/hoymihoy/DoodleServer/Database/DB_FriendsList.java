@@ -22,7 +22,7 @@ public class DB_FriendsList {
             return 2;       //user doesn't exists
 
         } else if(userExists == -1){
-            return -2;      //error
+            return -1;      //error
         }
 
         if(friendExists == 1) {

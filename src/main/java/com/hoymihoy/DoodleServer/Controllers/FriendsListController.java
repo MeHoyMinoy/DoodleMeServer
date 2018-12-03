@@ -23,8 +23,9 @@ public class FriendsListController {
                                    @RequestParam (value = "friendUserName") String friendUserName)
     {
         // If status = -1, there was an error while creating the query
-        // If status = 0, there is already a friendship for those users
         // If status = 1, a new friendship was created
+        // If status = 2, the user being added does not exist
+        // If status = 3, the user being added is already a friend
         int status = -1;
         try {
             status = DBFL.addFriendship(userName, friendUserName);
