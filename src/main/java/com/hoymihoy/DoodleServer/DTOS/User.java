@@ -3,26 +3,21 @@ package com.hoymihoy.DoodleServer.DTOS;
 import java.sql.Date;
 
 public class User {
-    private int userID;
-    private String username;
+    private String userName;
     private String password;
-    private String firstname;
-    private String lastname;
-    private Date birthdate;
+    private String firstName;
+    private String lastName;
+    private Date birthDate;
     private String email;
 
-    public void setUserID(int userID) { this.userID = userID; }
-
-    public int getUserID() { return userID; }
-
-    public String getUsername()
+    public String getUserName()
     {
-        return username;
+        return userName;
     }
 
-    public void setUsername(String username)
+    public void setUserName(String userName)
     {
-        this.username = username;
+        this.userName = userName;
     }
 
     public String getPassword()
@@ -35,35 +30,33 @@ public class User {
         this.password = password;
     }
 
-    public String getFirstname()
+    public String getFirstName()
     {
-        return firstname;
+        return firstName;
     }
 
-    public void setFirstname(String firstname)
+    public void setFirstName(String firstName)
     {
-        this.firstname = firstname;
+        this.firstName = firstName;
     }
 
-    public String getLastname()
+    public String getLastName()
     {
-        return lastname;
+        return lastName;
     }
 
-    public void setLastname(String lastname)
+    public void setLastName(String lastName)
     {
-        this.lastname = lastname;
+        this.lastName = lastName;
     }
 
-    public Date getBirthdate() {
-        return birthdate;
+    public Date getBirthDate() {
+        return birthDate;
     }
 
-    public void setBirthdate(Date birthdate) {
-        this.birthdate = birthdate;
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
     }
-
-
 
     public String getEmail()
     {

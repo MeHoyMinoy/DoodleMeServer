@@ -6,9 +6,10 @@ import com.hoymihoy.DoodleServer.DTOS.User;
 import java.sql.*;
 
 public class DBConnector {
-    private Connection con;
-    private Statement stmt;
-    private ResultSet rs;
+    public Connection con;
+    public Statement stmt;
+    public ResultSet rs;
+    public PreparedStatement pstmt;
     private String DBUsername = "admin";
     private String DBPassword = "DoodleMe";
     private String jdbcUrl = String.format(
@@ -17,7 +18,7 @@ public class DBConnector {
                     "direct-return-186020:us-east4:doodle-database"
     );
     
-    private Connection initializeConnection() throws SQLException {
+    protected Connection initializeConnection() throws SQLException {
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             con = DriverManager.getConnection(jdbcUrl, DBUsername, DBPassword);
@@ -43,6 +44,12 @@ public class DBConnector {
             stmt = con.createStatement();
             
             stmt.executeUpdate("DROP TABLE Users");
+
+            stmt.executeUpdate("DROP TABLE FriendsList");
+
+            stmt.executeUpdate("DROP TABLE Paintings");
+
+            stmt.executeUpdate("DROP TABLE UserPaintings");
         } 
         catch (Exception ex) {
             System.out.println(ex);
@@ -63,10 +70,31 @@ public class DBConnector {
 
             stmt=con.createStatement();
             
-            stmt.executeUpdate("create TABLE Users(userID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, userName VARCHAR(100) NOT NULL UNIQUE, password VARCHAR(100) NOT NULL,"
-                    + "first_name VARCHAR(100), last_name VARCHAR(100), email VARCHAR(100), birthDate DATE)");
+            stmt.executeUpdate("create TABLE Users(" +
+                    "userName VARCHAR(100) NOT NULL PRIMARY KEY, " +
+                    "password VARCHAR(100) NOT NULL, " +
+                    "firstName VARCHAR(100), " +
+                    "lastName VARCHAR(100), " +
+                    "email VARCHAR(100), " +
+                    "birthDate DATE)");
 
-        } 
+            stmt.executeUpdate("create TABLE FriendsList(" +
+                    "UserName VARCHAR(100) NOT NULL," +
+                    "FriendUserName VARCHAR(100) NOT NULL)");
+
+            stmt.executeUpdate("create TABLE Paintings(" +
+                    "PaintingID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
+                    "GameName VARCHAR(100) NOT NULL," +
+                    "OwnerUserName VARCHAR(100) NOT NULL, " +
+                    "Image VARCHAR(500) NOT NULL, " +
+                    "CurrentPlayerUserName VARCHAR(100), " +
+                    "CurrentPlayerSpot INT)");
+
+            stmt.executeUpdate("create TABLE UserPaintings(" +
+                    "PaintingID INT NOT NULL, " +
+                    "userName VARCHAR(100) NOT NULL)");
+        }
+
         catch (Exception ex) {
             System.out.println(ex);
             con.close();
@@ -77,115 +105,5 @@ public class DBConnector {
         }
         con.close();
         return 1;
-    }
-
-    public int createNewUser(User user) throws SQLException {
-        String updateString = "INSERT INTO Users(userName,password,first_name,last_name,email,birthDate) VALUES('" + user.getUsername() + "', '" + user.getPassword() + "', '" + user.getFirstname() + "', '"
-                + user.getLastname() + "', '" + user.getEmail() + "', '" + user.getBirthdate() + "');";
-
-        try {
-            con = initializeConnection();
-            stmt = con.createStatement();
-            int returnValue = stmt.executeUpdate(updateString);
-            con.close();
-            return returnValue;
-        }
-        catch (Exception e) {
-            System.out.println(e);
-            con.close();
-            return -1;
-        }
-        finally {
-            if (stmt != null)
-            {stmt.close();}
-        }
-    }
-
-    public User queryUserID(int userID) throws SQLException {
-        String queryString = "SELECT * FROM Users WHERE userID = '" + userID + "';";
-        User user = new User();
-
-        try {
-            con = initializeConnection();
-            stmt = con.createStatement();
-            rs = stmt.executeQuery(queryString);
-
-            while (rs.next())
-            {
-                user.setUserID(rs.getInt("userID"));
-                user.setUsername(rs.getString("userName"));
-                user.setPassword(rs.getString("password"));
-                user.setFirstname(rs.getString("first_name"));
-                user.setLastname(rs.getString("last_name"));
-                user.setEmail(rs.getString("email"));
-            }
-
-            con.close();
-            return user;
-
-        }
-        catch (Exception e) {
-            System.out.println(e);
-            user.setUsername("NULL");
-            con.close();
-            return user;
-        }
-        finally {
-            if (stmt != null)
-            {stmt.close();}
-        }
-    }
-
-    public int queryLoginCredentials(SecureUserLogin sul) throws SQLException {
-        String queryString = "SELECT userID FROM Users WHERE userName = '" + sul.getUserName() + "' AND password = '" + sul.getPassword() + "'";
-
-        int userID = 0;
-
-        try {
-            con = initializeConnection();
-            stmt = con.createStatement();
-            rs = stmt.executeQuery(queryString);
-            while(rs.next())
-            {
-                userID = rs.getInt("userID");
-                con.close();
-                return userID;
-            }
-        }
-        catch (Exception e) {
-            System.out.println(e);
-            con.close();
-            return -1;
-        }
-        finally {
-            if (stmt != null)
-            {stmt.close();}
-        }
-
-        return userID;
-    }
-
-    public int updateUser(int userID, User user) throws SQLException {
-        String updateString = "UPDATE Users SET userName = '" + user.getUsername() + "', first_name = '" + user.getFirstname()
-                + "', last_name = '" + user.getLastname() + "', email = '" + user.getEmail() + "', birthDate = '" + user.getBirthdate()
-                + "' WHERE userID = " + userID;
-
-        try {
-            con = initializeConnection();
-            stmt = con.createStatement();
-            int returnValue = stmt.executeUpdate(updateString);
-            con.close();
-
-            return returnValue;
-        }
-        catch (Exception e) {
-            System.out.println(e);
-            con.close();
-            return -1;
-        }
-        finally {
-            if (stmt != null)
-            {stmt.close();}
-        }
     }
 }
