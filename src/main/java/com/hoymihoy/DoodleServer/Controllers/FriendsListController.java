@@ -18,7 +18,7 @@ public class FriendsListController {
     public FriendsListController() {}
 
     @CrossOrigin
-    @GetMapping(path = "/AddFriend")
+    @PostMapping(path = "/AddFriend")
     public int CreateNewFriendship(@RequestParam (value = "userName") String userName,
                                    @RequestParam (value = "friendUserName") String friendUserName)
     {
