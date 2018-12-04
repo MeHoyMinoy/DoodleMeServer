@@ -50,6 +50,14 @@ public class DoodleMeServer {
             person.setLastName("Inside");
             person.setEmail("admin@gmail.com");
             DBU.createNewUser(person);
+
+            person.setBirthDate(java.sql.Date.valueOf("1997-09-16"));
+            person.setUserName("admin3");
+            person.setPassword("admin");
+            person.setFirstName("Open");
+            person.setLastName("Inside");
+            person.setEmail("admin@gmail.com");
+            DBU.createNewUser(person);
             /////////////////////////////////////
 
             //Adding friends for user adp5384

@@ -33,7 +33,8 @@ public class DB_User {
     }
 
     public User queryUserName(String userName) throws SQLException {
-        String queryString = "SELECT * FROM Users WHERE userName = '" + userName + "'";
+        String queryString = "SELECT * FROM Users " +
+                "WHERE userName COLLATE utf8_bin = '" + userName + "' ";
         User user = new User();
 
         try {
@@ -67,7 +68,7 @@ public class DB_User {
     }
 
     public int queryLoginCredentials(SecureUserLogin sul) throws SQLException {
-        String queryString = "SELECT count(*) AS rows FROM Users WHERE userName = '" + sul.getUserName() + "' AND password = '" + sul.getPassword() + "'";
+        String queryString = "SELECT count(*) AS rows FROM Users WHERE userName COLLATE utf8_bin = '" + sul.getUserName() + "' AND password COLLATE utf8_bin = '" + sul.getPassword() + "'";
 
         int rows = 0;
 
@@ -101,7 +102,7 @@ public class DB_User {
                 "', lastName = '" + user.getLastName() +
                 "', email = '" + user.getEmail() +
                 "', birthDate = '" + user.getBirthDate() +
-                "' WHERE userName = '" + user.getUserName() +"'";
+                "' WHERE userName COLLATE utf8_bin = '" + user.getUserName() +"'";
         try {
             DBC.con = DBC.initializeConnection();
             DBC.stmt = DBC.con.createStatement();

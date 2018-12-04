@@ -1,7 +1,6 @@
 package com.hoymihoy.DoodleServer.Database;
 
 import com.hoymihoy.DoodleServer.DTOS.User;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -16,11 +15,10 @@ public class DB_FriendsList {
     {
 
         int userExists = queryUserExists(user2);          //check if user exists
-        int friendExists = queryFriendExists(user1, user2);       //check if friend exists
+        int friendExists = queryAlreadyFriends(user1, user2);       //check if friend exists
 
         if(userExists == 0) {
             return 2;       //user doesn't exists
-
         } else if(userExists == -1){
             return -1;      //error
         }
@@ -58,7 +56,7 @@ public class DB_FriendsList {
 
         String queryString = "SELECT FriendUserName " +
                 "FROM FriendsList " +
-                "WHERE UserName = '" + userName + "'";
+                "WHERE UserName COLLATE utf8_bin = '" + userName + "'";
 
         try {
             DBC.con = DBC.initializeConnection();
@@ -88,7 +86,7 @@ public class DB_FriendsList {
     //Function returns 1 for if user already is in friendsList
     //Function return 0 for if user is not in friendsList
     //Function return -1 if Exception was thrown
-    public int queryFriendExists(String User1, String User2)
+    public int queryAlreadyFriends(String User1, String User2)
     {
         ArrayList<String> friends;
         try {
@@ -112,7 +110,7 @@ public class DB_FriendsList {
     public int queryUserExists(String userName)
     {
         DB_User DBU = new DB_User();
-        User user = new User();
+        User user;
         try{
             user = DBU.queryUserName(userName);
             if(user.getUserName() == null){
