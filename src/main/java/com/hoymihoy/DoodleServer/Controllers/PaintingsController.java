@@ -67,9 +67,9 @@ public class PaintingsController {
 
     @CrossOrigin
     @GetMapping(path = "/GetFeed")
-    public void queryUserPaintings(@RequestParam String user) throws SQLException {
+    public ArrayList queryUserPaintings(@RequestParam String user) throws SQLException {
         ArrayList<Painting> userPaintings = DBP.getUserPaintings(user);
-        try
+        /*try
         {
             ServerSocket myServerSocket = new ServerSocket(9999);
             Socket skt = myServerSocket.accept();
@@ -86,7 +86,8 @@ public class PaintingsController {
         catch (IOException e)
         {
             e.printStackTrace();
-        }
+        }*/
+        return userPaintings;
     }
 
 

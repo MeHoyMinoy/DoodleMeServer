@@ -19,12 +19,12 @@ public class DB_Paintings {
 
     public int createNewPainting(Painting p) throws SQLException
     {
-        Blob convertedBlob = convertImageToBlob(p.getImage());
+        //Blob convertedBlob = convertImageToBlob(p.getImage());
         //Blob convertedImage;
-        p.setConvertedImage(convertedBlob);
+        //p.setConvertedImage(convertedBlob);
 
-        String updateString = "INSERT INTO Paintings(GameName, OwnerUserName, ConvertedImage, CurrentPlayerUserName, CurrentPlayerSpot) " +
-                "VALUES('" + p.getGameName() + "', '" + p.getOwnerUserName() + "', '" + p.getConvertedImage() +"', '" + p.getCurrentPlayerUserName() + "', " + p.getCurrentPlayerSpot() + ")";
+        String updateString = "INSERT INTO Paintings(GameName, OwnerUserName, ImagePath, CurrentPlayerUserName, CurrentPlayerSpot) " +
+                "VALUES('" + p.getGameName() + "', '" + p.getOwnerUserName() + "', '" + p.getImage().getName() +"', '" + p.getCurrentPlayerUserName() + "', " + p.getCurrentPlayerSpot() + ")";
         try {
             DBC.con = DBC.initializeConnection();
             DBC.pstmt = DBC.con.prepareStatement(updateString, Statement.RETURN_GENERATED_KEYS);
@@ -76,6 +76,7 @@ public class DB_Paintings {
     }
 
     public String convertBlobToString(Blob blob){
+
         String s = "Boo";
         if(blob == null)
             return null;
@@ -86,7 +87,7 @@ public class DB_Paintings {
             byte[] bytes = blob.getBytes(pos, len);
             in.close();
 
-            s = bytes.toString();
+            s = bytes.toString();//issue here
             System.out.println(s);
             return s;
         } catch (Exception E) {
@@ -110,7 +111,7 @@ public class DB_Paintings {
                 p.setPaintingID(DBC.rs.getInt("PaintingID"));
                 p.setGameName(DBC.rs.getString("GameName"));
                 p.setOwnerUserName(DBC.rs.getString("OwnerUserName"));
-                p.setImage(convertBlobToString(DBC.rs.getBlob("ConvertedImage")));
+                p.getImage().setName(DBC.rs.getString("ImagePath"));
                 p.setCurrentPlayerUserName(DBC.rs.getString("CurrentPlayerUserName"));
                 p.setCurrentPlayerSpot(DBC.rs.getInt("CurrentPlayerSpot"));
             }
@@ -138,7 +139,7 @@ public class DB_Paintings {
     {
         String updateString = "UPDATE Paintings SET" +
                 " GameName = '" + p.getGameName() +
-                "', Image = '" + p.getImage() +
+                "', ImagePath = '" + p.getImage().getName() +
                 "' WHERE PaintingID = " + p.getPaintingID();
 
         try {
@@ -181,7 +182,7 @@ public class DB_Paintings {
                 p.setPaintingID(DBC.rs.getInt("PaintingID"));
                 p.setGameName(DBC.rs.getString("GameName"));
                 p.setOwnerUserName(DBC.rs.getString("OwnerUserName"));
-                p.setImage(convertBlobToString(DBC.rs.getBlob("ConvertedImage")));
+                p.getImage().setName(DBC.rs.getString("ImagePath"));
 
                 paintings.add(p);
             }

@@ -6,7 +6,7 @@ public class Painting {
     private int paintingID;
     private String gameName;
     private String ownerUserName;
-    private String image;
+    private Image image;
     private Blob ConvertedImage;
     private String currentPlayerUserName;
     private int currentPlayerSpot;
@@ -68,11 +68,11 @@ public class Painting {
         this.ownerUserName = ownerUserName;
     }
 
-    public String getImage() {
+    public Image getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(Image image) {
         this.image = image;
     }
 }
