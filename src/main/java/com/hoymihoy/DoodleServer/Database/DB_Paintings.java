@@ -5,10 +5,7 @@ import com.hoymihoy.DoodleServer.DTOS.Painting;
 import com.hoymihoy.DoodleServer.DTOS.User;
 
 import javax.sql.rowset.serial.SerialBlob;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.sql.Blob;
 import java.sql.SQLException;
@@ -26,7 +23,7 @@ public class DB_Paintings {
         //Blob convertedImage;
         p.setConvertedImage(convertedBlob);
 
-        String updateString = "INSERT INTO Paintings(GameName, OwnerUserName, Image, CurrentPlayerUserName, CurrentPlayerSpot) " +
+        String updateString = "INSERT INTO Paintings(GameName, OwnerUserName, ConvertedImage, CurrentPlayerUserName, CurrentPlayerSpot) " +
                 "VALUES('" + p.getGameName() + "', '" + p.getOwnerUserName() + "', '" + p.getConvertedImage() +"', '" + p.getCurrentPlayerUserName() + "', " + p.getCurrentPlayerSpot() + ")";
         try {
             DBC.con = DBC.initializeConnection();
@@ -52,7 +49,7 @@ public class DB_Paintings {
     }
 
     public Blob convertImageToBlob(String image){
-        Blob  b = null;
+        Blob b = null;
         try {
             b = DBC.initializeConnection().createBlob();
         } catch (SQLException E) {
@@ -74,18 +71,29 @@ public class DB_Paintings {
         } catch (SQLException E) {
             System.out.println(E);
         }
+        System.out.println(b);
         return b;
     }
 
     public String convertBlobToString(Blob blob){
-        String a = "a";
+        String s = "Boo";
+        if(blob == null)
+            return null;
         try {
-            a = new String(blob.getBytes(1L, (int) blob.length()));
-        } catch (SQLException e) {
-            e.printStackTrace();
+            InputStream in = blob.getBinaryStream();
+            int len = (int) blob.length(); //read as long
+            long pos = 1; //indexing starts from 1
+            byte[] bytes = blob.getBytes(pos, len);
+            in.close();
+
+            s = bytes.toString();
+            System.out.println(s);
+            return s;
+        } catch (Exception E) {
+            System.out.println(E);
         }
-        return a;
-        }
+        return null;
+    }
 
     public Painting queryPaintingID(int paintingID) throws SQLException {
         String queryString = "SELECT * FROM Paintings WHERE PaintingID ='" + paintingID + "';";
@@ -102,7 +110,7 @@ public class DB_Paintings {
                 p.setPaintingID(DBC.rs.getInt("PaintingID"));
                 p.setGameName(DBC.rs.getString("GameName"));
                 p.setOwnerUserName(DBC.rs.getString("OwnerUserName"));
-                p.setImage(convertBlobToString(DBC.rs.getBlob("Image")));
+                p.setImage(convertBlobToString(DBC.rs.getBlob("ConvertedImage")));
                 p.setCurrentPlayerUserName(DBC.rs.getString("CurrentPlayerUserName"));
                 p.setCurrentPlayerSpot(DBC.rs.getInt("CurrentPlayerSpot"));
             }
@@ -173,7 +181,7 @@ public class DB_Paintings {
                 p.setPaintingID(DBC.rs.getInt("PaintingID"));
                 p.setGameName(DBC.rs.getString("GameName"));
                 p.setOwnerUserName(DBC.rs.getString("OwnerUserName"));
-                p.setImage(DBC.rs.getString("Image"));
+                p.setImage(convertBlobToString(DBC.rs.getBlob("ConvertedImage")));
 
                 paintings.add(p);
             }

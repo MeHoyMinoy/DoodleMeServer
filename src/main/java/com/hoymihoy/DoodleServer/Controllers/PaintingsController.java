@@ -6,6 +6,10 @@ import com.hoymihoy.DoodleServer.DTOS.User;
 import com.hoymihoy.DoodleServer.Database.DB_Paintings;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -63,10 +67,28 @@ public class PaintingsController {
 
     @CrossOrigin
     @GetMapping(path = "/GetFeed")
-    public ArrayList<Painting> queryUserPaintings(@RequestParam String user) throws SQLException {
+    public void queryUserPaintings(@RequestParam String user) throws SQLException {
         ArrayList<Painting> userPaintings = DBP.getUserPaintings(user);
-        return userPaintings;
+        try
+        {
+            ServerSocket myServerSocket = new ServerSocket(9999);
+            Socket skt = myServerSocket.accept();
+            try
+            {
+                ObjectOutputStream objectOutput = new ObjectOutputStream(skt.getOutputStream());
+                objectOutput.writeObject(userPaintings);
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
     }
+
 
     @CrossOrigin
     @PostMapping(path = "/CreateGroup")
