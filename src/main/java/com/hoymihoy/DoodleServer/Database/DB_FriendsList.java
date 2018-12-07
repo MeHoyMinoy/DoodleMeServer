@@ -50,6 +50,50 @@ public class DB_FriendsList {
         }
     }
 
+
+
+    public int deleteFriendship(String user1, String user2) throws SQLException
+    {
+
+        int userExists = queryUserExists(user2);                    //check if user exists
+        int friendExists = queryAlreadyFriends(user1, user2);       //check if friend exists
+
+        if(userExists == 0) {
+            return 2;       //user doesn't exists
+        } else if(userExists == -1){
+            return -1;      //error
+        }
+
+        if(friendExists == 0) {
+            return 3;       //Not a Friend
+        } else if(friendExists == -1){
+            return -1;      //error
+        }
+
+        String updateString = "DELETE FROM FriendsList WHERE UserName='"+ user1 +"' AND FriendUserName='"+ user2 +"'";
+
+
+
+        try {
+            DBC.con = DBC.initializeConnection();
+            DBC.stmt = DBC.con.createStatement();
+            int returnValue = DBC.stmt.executeUpdate(updateString);
+            DBC.con.close();
+            return returnValue;
+        }
+        catch (Exception e) {
+            System.out.println(e);
+            DBC.con.close();
+            return -1;
+        }
+        finally {
+            if (DBC.stmt != null)
+            {DBC.stmt.close();}
+        }
+    }
+
+
+
     public ArrayList<String> queryFriendsList(String userName) throws SQLException
     {
         ArrayList<String> friends = new ArrayList<>();

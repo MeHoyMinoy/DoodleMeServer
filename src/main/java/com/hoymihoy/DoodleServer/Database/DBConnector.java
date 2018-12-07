@@ -2,6 +2,7 @@ package com.hoymihoy.DoodleServer.Database;
 
 import com.hoymihoy.DoodleServer.DTOS.SecureUserLogin;
 import com.hoymihoy.DoodleServer.DTOS.User;
+import java.sql.Blob;
 
 import java.sql.*;
 
@@ -86,7 +87,7 @@ public class DBConnector {
                     "PaintingID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
                     "GameName VARCHAR(100) NOT NULL," +
                     "OwnerUserName VARCHAR(100) NOT NULL, " +
-                    "Image VARCHAR(500) NOT NULL, " +
+                    "Image VARBINARY(100) NOT NULL, " +
                     "CurrentPlayerUserName VARCHAR(100), " +
                     "CurrentPlayerSpot INT)");
 

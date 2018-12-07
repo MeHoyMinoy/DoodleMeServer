@@ -18,7 +18,7 @@ public class FriendsListController {
     public FriendsListController() {}
 
     @CrossOrigin
-    @GetMapping(path = "/AddFriend")
+    @PostMapping(path = "/AddFriend")
     public int CreateNewFriendship(@RequestParam (value = "userName") String userName,
                                    @RequestParam (value = "friendUserName") String friendUserName)
     {
@@ -29,6 +29,28 @@ public class FriendsListController {
         int status = -1;
         try {
             status = DBFL.addFriendship(userName, friendUserName);
+            return status;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return status;
+        }
+
+
+
+    }
+
+    @CrossOrigin
+    @PostMapping(path = "/DeleteFriend")
+    public int DeleteFriendship(@RequestParam (value = "userName") String userName,
+                                   @RequestParam (value = "friendUserName") String friendUserName)
+    {
+        // If status = -1, there was an error while creating the query
+        // If status = 1, a friend was deleted
+        // If status = 2, the user being added does not exist
+        // If status = 3, the user being deleted is not a friend
+        int status = -1;
+        try {
+            status = DBFL.deleteFriendship(userName, friendUserName);
             return status;
         } catch (SQLException e) {
             e.printStackTrace();

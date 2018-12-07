@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataSource name="DoodleMe_DB@35.236.253.241">
-  <database-model serializer="dbm" rdbms="MYSQL" format-version="4.9">
+  <database-model serializer="dbm" dbms="MYSQL" family-id="MYSQL" format-version="4.14">
     <root id="1">
       <ServerVersion>5.7.14</ServerVersion>
       <DefaultEngine>InnoDB</DefaultEngine>
@@ -949,7 +949,7 @@
     </column>
     <column id="238" parent="230" name="Image">
       <Position>4</Position>
-      <DataType>varchar(500)|0s</DataType>
+      <DataType>varbinary(100)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
