@@ -23,7 +23,6 @@ public class DB_Paintings {
 
     public int createNewPainting(Painting p) throws SQLException
     {
-        Image image = p.getImage();
 
         String updateString = "INSERT INTO Paintings(GameName, OwnerUserName, CurrentPlayerUserName, CurrentPlayerSpot) " +
                 "VALUES('" + p.getGameName() + "', '" + p.getOwnerUserName() + "', '" + p.getCurrentPlayerUserName() + "', " + p.getCurrentPlayerSpot() + ")";
@@ -38,7 +37,7 @@ public class DB_Paintings {
             try {
                 File file = new File(pathName);
                 FileWriter fileWriter = new FileWriter(file);
-                fileWriter.write(image.getData());
+                fileWriter.write(p.getImage());
                 fileWriter.flush();
                 fileWriter.close();
             } catch (IOException e) {
@@ -71,7 +70,7 @@ public class DB_Paintings {
         String queryString = "SELECT * FROM Paintings WHERE PaintingID ='" + paintingID + "';";
 
         Painting p = new Painting();
-        Image image = new Image();
+        //Image image = new Image();
 
         try {
             DBC.con = DBC.initializeConnection();
@@ -83,9 +82,7 @@ public class DB_Paintings {
                 p.setPaintingID(DBC.rs.getInt("PaintingID"));
                 p.setGameName(DBC.rs.getString("GameName"));
                 p.setOwnerUserName(DBC.rs.getString("OwnerUserName"));
-                image.setName(DBC.rs.getString("ImagePath"));
-                image.setData(getImageData(image.getName()));
-                p.setImage(image);
+                p.setImage(getImageData(DBC.rs.getString("ImagePath")));
                 p.setCurrentPlayerUserName(DBC.rs.getString("CurrentPlayerUserName"));
                 p.setCurrentPlayerSpot(DBC.rs.getInt("CurrentPlayerSpot"));
             }
@@ -113,7 +110,7 @@ public class DB_Paintings {
     {
         String updateString = "UPDATE Paintings SET" +
                 " GameName = '" + p.getGameName() +
-                "', ImagePath = '" + p.getImage().getName() +
+                "', ImagePath = '" + p.getImage() +
                 "', CurrentPlayerSpot = '" + p.getCurrentPlayerSpot() +
                 "', CurrentPlayerUserName = '" + p.getCurrentPlayerSpot() +
                 "' WHERE PaintingID = " + p.getPaintingID();
@@ -159,9 +156,9 @@ public class DB_Paintings {
                 p.setPaintingID(DBC.rs.getInt("PaintingID"));
                 p.setGameName(DBC.rs.getString("GameName"));
                 p.setOwnerUserName(DBC.rs.getString("OwnerUserName"));
-                image.setName(DBC.rs.getString("ImagePath"));
-                image.setData(getImageData(image.getName()));
-                p.setImage(image);
+                p.setImage(getImageData(DBC.rs.getString("ImagePath")));
+                p.setCurrentPlayerUserName(DBC.rs.getString("CurrentPlayerUserName"));
+                p.setCurrentPlayerSpot(DBC.rs.getInt("CurrentPlayerSpot"));
 
                 paintings.add(p);
             }

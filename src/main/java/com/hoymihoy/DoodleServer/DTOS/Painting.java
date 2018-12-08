@@ -1,12 +1,13 @@
 package com.hoymihoy.DoodleServer.DTOS;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Painting {
+public class Painting implements Serializable {
     private int paintingID;
     private String gameName;
     private String ownerUserName;
-    private Image image;
+    private String image;
     private String currentPlayerUserName;
     private int currentPlayerSpot;
     private ArrayList<String> players;
@@ -59,11 +60,11 @@ public class Painting {
         this.ownerUserName = ownerUserName;
     }
 
-    public Image getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(Image image) {
+    public void setImage(String image) {
         this.image = image;
     }
 }
