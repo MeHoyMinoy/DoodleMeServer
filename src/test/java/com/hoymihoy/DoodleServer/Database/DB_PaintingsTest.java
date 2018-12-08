@@ -1,8 +1,6 @@
 package com.hoymihoy.DoodleServer.Database;
 
-import com.hoymihoy.DoodleServer.DTOS.PaintingUsers;
 import com.hoymihoy.DoodleServer.DTOS.Painting;
-import com.hoymihoy.DoodleServer.DTOS.User;
 import org.junit.Assert;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -39,9 +37,12 @@ public class DB_PaintingsTest {
 
         p.setPlayers(players);
 
-        p.setGameName("test game");
-        p.setImage("image code here");
-        p.setOwnerUserName("dhg5054");
+//        p.setGameName("test game");
+//        Image img = new Image();
+//        img.setName("path");
+//        img.setData("data");
+//        p.setImage(img);
+//        p.setOwnerUserName("dhg5054");
 
 
         Assert.assertEquals(1, DBP.createNewPainting(p));
@@ -59,9 +60,12 @@ public class DB_PaintingsTest {
 
         p.setPlayers(players);
 
-        p.setGameName("test game2");
-        p.setImage("more image code here");
-        p.setOwnerUserName("dhg5054");
+//        p.setGameName("test game2");
+//        Image img = new Image();
+//        img.setName("path");
+//        img.setData("data");
+//        p.setImage(img);
+//        p.setOwnerUserName("dhg5054");
 
         Assert.assertEquals(2, DBP.createNewPainting(p));
     }
@@ -74,7 +78,7 @@ public class DB_PaintingsTest {
 
         p = DBP.queryPaintingID(paintingID);
 
-        Assert.assertEquals("more image code here", p.getImage());
+        Assert.assertEquals(2, p.getPaintingID());
     }
 
     @Test
@@ -86,7 +90,7 @@ public class DB_PaintingsTest {
         p = DBP.queryPaintingID(paintingID);
 
         Assert.assertEquals(0, p.getPaintingID());
-        Assert.assertEquals(null, p.getImage());
+        //Assert.assertEquals(null, p.getImage());
     }
 
     @Test
@@ -96,7 +100,10 @@ public class DB_PaintingsTest {
         p.setPaintingID(1);
         p.setOwnerUserName("dhg5054");
         p.setGameName("updated game name");
-        p.setImage("updated image text");
+//        Image img = new Image();
+//        img.setName("path");
+//        img.setData("data");
+//        p.setImage(img);
 
         int result = DBP.updatePainting(p);
 
@@ -115,7 +122,10 @@ public class DB_PaintingsTest {
 
         Assert.assertEquals(0, DBP.updatePainting(p));
 
-        p.setImage("Move along.");
+//        Image img = new Image();
+//        img.setName("path");
+//        img.setData("data");
+//        p.setImage(img);
 
         Assert.assertEquals(0, DBP.updatePainting(p));
     }
@@ -127,7 +137,7 @@ public class DB_PaintingsTest {
         ArrayList<String> players = new ArrayList<>();
 
 
-        p.setImage("game image text");
+        //p.setImage("game image text");
         p.setOwnerUserName("dhg5054");
         p.setGameName("game test");
 
@@ -158,7 +168,10 @@ public class DB_PaintingsTest {
         ArrayList<String> players = new ArrayList<>();
 
         p.setOwnerUserName("dhg5054");
-        p.setImage("testing image again");
+//        Image img = new Image();
+//        img.setName("path");
+//        img.setData("data");
+//        p.setImage(img);
         players.add(userName);
         p.setPlayers(players);
 

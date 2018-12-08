@@ -87,7 +87,7 @@ public class DBConnector {
                     "PaintingID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
                     "GameName VARCHAR(100) NOT NULL," +
                     "OwnerUserName VARCHAR(100) NOT NULL, " +
-                    "ImagePath VARCHAR(100) NOT NULL, " +
+                    "ImagePath VARCHAR(100), " +
                     "CurrentPlayerUserName VARCHAR(100), " +
                     "CurrentPlayerSpot INT)");
 

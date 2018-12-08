@@ -1,12 +1,16 @@
 package com.hoymihoy.DoodleServer.Database;
 
+import com.hoymihoy.DoodleServer.DTOS.Image;
 import com.hoymihoy.DoodleServer.DTOS.PaintingUsers;
 import com.hoymihoy.DoodleServer.DTOS.Painting;
 import com.hoymihoy.DoodleServer.DTOS.User;
 
 import javax.sql.rowset.serial.SerialBlob;
+import java.awt.*;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -19,12 +23,10 @@ public class DB_Paintings {
 
     public int createNewPainting(Painting p) throws SQLException
     {
-        //Blob convertedBlob = convertImageToBlob(p.getImage());
-        //Blob convertedImage;
-        //p.setConvertedImage(convertedBlob);
+        Image image = p.getImage();
 
-        String updateString = "INSERT INTO Paintings(GameName, OwnerUserName, ImagePath, CurrentPlayerUserName, CurrentPlayerSpot) " +
-                "VALUES('" + p.getGameName() + "', '" + p.getOwnerUserName() + "', '" + p.getImage().getName() +"', '" + p.getCurrentPlayerUserName() + "', " + p.getCurrentPlayerSpot() + ")";
+        String updateString = "INSERT INTO Paintings(GameName, OwnerUserName, CurrentPlayerUserName, CurrentPlayerSpot) " +
+                "VALUES('" + p.getGameName() + "', '" + p.getOwnerUserName() + "', '" + p.getCurrentPlayerUserName() + "', " + p.getCurrentPlayerSpot() + ")";
         try {
             DBC.con = DBC.initializeConnection();
             DBC.pstmt = DBC.con.prepareStatement(updateString, Statement.RETURN_GENERATED_KEYS);
@@ -32,6 +34,23 @@ public class DB_Paintings {
             DBC.rs = DBC.pstmt.getGeneratedKeys();
             DBC.rs.next();
             int returnValue = DBC.rs.getInt(1);
+            String pathName = returnValue + ".txt";
+            try {
+                File file = new File(pathName);
+                FileWriter fileWriter = new FileWriter(file);
+                fileWriter.write(image.getData());
+                fileWriter.flush();
+                fileWriter.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            String updateString2 = "UPDATE Paintings SET " +
+                    "ImagePath = '" + pathName + "' WHERE PaintingID = " + returnValue;
+
+            DBC.con = DBC.initializeConnection();
+            DBC.stmt = DBC.con.createStatement();
+            DBC.stmt.executeUpdate(updateString2);
+
             PaintingUsers pu = new PaintingUsers(returnValue, p.getPlayers());
             createNewGame(pu);
             DBC.con.close();
@@ -48,58 +67,11 @@ public class DB_Paintings {
         }
     }
 
-    public Blob convertImageToBlob(String image){
-        Blob b = null;
-        try {
-            b = DBC.initializeConnection().createBlob();
-        } catch (SQLException E) {
-            System.out.println(E);
-        }
-
-        //b = input.getBytes();
-        byte[] buff = image.getBytes(StandardCharsets.UTF_8);
-        try{
-            assert b != null;
-                b.setBytes(1, buff);
-            }
-        catch(Exception E){
-            System.out.println(E);
-            }
-
-        try {
-            DBC.initializeConnection().close();
-        } catch (SQLException E) {
-            System.out.println(E);
-        }
-        System.out.println(b);
-        return b;
-    }
-
-    public String convertBlobToString(Blob blob){
-
-        String s = "Boo";
-        if(blob == null)
-            return null;
-        try {
-            InputStream in = blob.getBinaryStream();
-            int len = (int) blob.length(); //read as long
-            long pos = 1; //indexing starts from 1
-            byte[] bytes = blob.getBytes(pos, len);
-            in.close();
-
-            s = bytes.toString();//issue here
-            System.out.println(s);
-            return s;
-        } catch (Exception E) {
-            System.out.println(E);
-        }
-        return null;
-    }
-
     public Painting queryPaintingID(int paintingID) throws SQLException {
         String queryString = "SELECT * FROM Paintings WHERE PaintingID ='" + paintingID + "';";
 
         Painting p = new Painting();
+        Image image = new Image();
 
         try {
             DBC.con = DBC.initializeConnection();
@@ -111,7 +83,9 @@ public class DB_Paintings {
                 p.setPaintingID(DBC.rs.getInt("PaintingID"));
                 p.setGameName(DBC.rs.getString("GameName"));
                 p.setOwnerUserName(DBC.rs.getString("OwnerUserName"));
-                p.getImage().setName(DBC.rs.getString("ImagePath"));
+                image.setName(DBC.rs.getString("ImagePath"));
+                image.setData(getImageData(image.getName()));
+                p.setImage(image);
                 p.setCurrentPlayerUserName(DBC.rs.getString("CurrentPlayerUserName"));
                 p.setCurrentPlayerSpot(DBC.rs.getInt("CurrentPlayerSpot"));
             }
@@ -140,6 +114,8 @@ public class DB_Paintings {
         String updateString = "UPDATE Paintings SET" +
                 " GameName = '" + p.getGameName() +
                 "', ImagePath = '" + p.getImage().getName() +
+                "', CurrentPlayerSpot = '" + p.getCurrentPlayerSpot() +
+                "', CurrentPlayerUserName = '" + p.getCurrentPlayerSpot() +
                 "' WHERE PaintingID = " + p.getPaintingID();
 
         try {
@@ -178,11 +154,14 @@ public class DB_Paintings {
             while (DBC.rs.next())
             {
                 Painting p = new Painting();
+                Image image = new Image();
 
                 p.setPaintingID(DBC.rs.getInt("PaintingID"));
                 p.setGameName(DBC.rs.getString("GameName"));
                 p.setOwnerUserName(DBC.rs.getString("OwnerUserName"));
-                p.getImage().setName(DBC.rs.getString("ImagePath"));
+                image.setName(DBC.rs.getString("ImagePath"));
+                image.setData(getImageData(image.getName()));
+                p.setImage(image);
 
                 paintings.add(p);
             }
@@ -231,4 +210,17 @@ public class DB_Paintings {
         }
         return addedRows;
     }
+
+    public static String getImageData(String fileName)
+    {
+        String text = "";
+        try {
+            text = new String(Files.readAllBytes(Paths.get(fileName)));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return text;
+    }
+
+
 }

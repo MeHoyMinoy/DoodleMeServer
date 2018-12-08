@@ -1,13 +1,12 @@
 package com.hoymihoy.DoodleServer.DTOS;
 
 import java.util.ArrayList;
-import java.sql.Blob;
+
 public class Painting {
     private int paintingID;
     private String gameName;
     private String ownerUserName;
     private Image image;
-    private Blob ConvertedImage;
     private String currentPlayerUserName;
     private int currentPlayerSpot;
     private ArrayList<String> players;
@@ -34,14 +33,6 @@ public class Painting {
 
     public void setPlayers(ArrayList<String> players) {
         this.players = players;
-    }
-
-    public Blob getConvertedImage() {
-        return ConvertedImage;
-    }
-
-    public void setConvertedImage(Blob convertedImage) {
-        this.ConvertedImage = convertedImage;
     }
 
     public String getGameName() {
