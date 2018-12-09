@@ -950,7 +950,6 @@
     <column id="238" parent="230" name="ImagePath">
       <Position>4</Position>
       <DataType>varchar(100)|0s</DataType>
-      <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="239" parent="230" name="CurrentPlayerUserName">

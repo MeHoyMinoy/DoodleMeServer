@@ -25,7 +25,7 @@ public class DB_Paintings {
     {
 
         String updateString = "INSERT INTO Paintings(GameName, OwnerUserName, CurrentPlayerUserName, CurrentPlayerSpot) " +
-                "VALUES('" + p.getGameName() + "', '" + p.getOwnerUserName() + "', '" + p.getCurrentPlayerUserName() + "', " + p.getCurrentPlayerSpot() + ")";
+                "VALUES('" + p.getGameName() + "', '" + p.getOwnerUserName() + "', '" + p.getPlayers().get(1)+ "', " + (p.getCurrentPlayerSpot()+1) + ")";
         try {
             DBC.con = DBC.initializeConnection();
             DBC.pstmt = DBC.con.prepareStatement(updateString, Statement.RETURN_GENERATED_KEYS);
@@ -43,8 +43,7 @@ public class DB_Paintings {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            String updateString2 = "UPDATE Paintings SET " +
-                    "ImagePath = '" + pathName + "' WHERE PaintingID = " + returnValue;
+            String updateString2 = "UPDATE Paintings SET " + "ImagePath = '" + pathName + "' WHERE PaintingID = " + returnValue;
 
             DBC.con = DBC.initializeConnection();
             DBC.stmt = DBC.con.createStatement();
@@ -108,19 +107,65 @@ public class DB_Paintings {
 
     public int updatePainting(Painting p) throws SQLException
     {
-        String updateString = "UPDATE Paintings SET" +
-                " GameName = '" + p.getGameName() +
-                "', ImagePath = '" + p.getImage() +
-                "', CurrentPlayerSpot = '" + p.getCurrentPlayerSpot() +
-                "', CurrentPlayerUserName = '" + p.getCurrentPlayerSpot() +
-                "' WHERE PaintingID = " + p.getPaintingID();
-
+        String queryGame = "SELECT * FROM UserPaintings WHERE PaintingID ='" + p.getPaintingID() + "';";
+//        String userNames = "";
+        ArrayList<String> userNames = new ArrayList<String>();
         try {
             DBC.con = DBC.initializeConnection();
             DBC.stmt = DBC.con.createStatement();
-            int returnValue = DBC.stmt.executeUpdate(updateString);
+            DBC.rs = DBC.stmt.executeQuery(queryGame);
+            while (DBC.rs.next())
+            {
+                userNames.add(DBC.rs.getString("userName"));
+            }
             DBC.con.close();
+        }
+        catch (Exception e) {
+            System.out.println(e);
+            DBC.con.close();
+            return -1;
+        }
+        finally {
+            if (DBC.stmt != null)
+            {DBC.stmt.close();}
+        }
 
+        int temp = p.getCurrentPlayerSpot() + 1;
+
+        if(temp == userNames.size()){
+            temp = 0;
+            p.setCurrentPlayerSpot(0);
+        }
+        else p.setCurrentPlayerSpot(temp);
+        p.setCurrentPlayerUserName(userNames.get(temp));
+
+        String temp1 = p.getCurrentPlayerUserName();
+        System.out.println(temp1);
+
+        String updateSpot = "UPDATE Paintings SET" +
+                " CurrentPlayerSpot = " + temp +
+                " WHERE PaintingID = " + p.getPaintingID();
+
+        String updateName = "UPDATE Paintings SET " +
+                "CurrentPlayerUserName = '" + userNames.get(temp) +
+                "' WHERE PaintingID = " + p.getPaintingID();
+
+        try {
+            String pathName = p.getPaintingID() + ".txt";
+            try {
+                File file = new File(pathName);
+                FileWriter fileWriter = new FileWriter(file);
+                fileWriter.write(p.getImage());
+                fileWriter.flush();
+                fileWriter.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            DBC.con = DBC.initializeConnection();
+            DBC.stmt = DBC.con.createStatement();
+            int returnValue = DBC.stmt.executeUpdate(updateSpot);
+            int returnV = DBC.stmt.executeUpdate(updateName);
+            DBC.con.close();
             return returnValue;
         }
         catch (Exception e) {
@@ -189,6 +234,7 @@ public class DB_Paintings {
         {
             updateString = "INSERT INTO UserPaintings(PaintingID, UserName) " +
                     "VALUES(" + paintingID + ", '" + players.get(i) +"');";
+
             try {
                 DBC.con = DBC.initializeConnection();
                 DBC.stmt = DBC.con.createStatement();
@@ -208,7 +254,7 @@ public class DB_Paintings {
         return addedRows;
     }
 
-    public static String getImageData(String fileName)
+    private static String getImageData(String fileName)
     {
         String text = "";
         try {
