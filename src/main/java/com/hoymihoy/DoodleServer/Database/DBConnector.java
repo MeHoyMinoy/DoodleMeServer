@@ -89,7 +89,8 @@ public class DBConnector {
                     "OwnerUserName VARCHAR(100) NOT NULL, " +
                     "ImagePath VARCHAR(100), " +
                     "CurrentPlayerUserName VARCHAR(100), " +
-                    "CurrentPlayerSpot INT)");
+                    "CurrentPlayerSpot INT, "+
+                    "Rounds INT)");
 
             stmt.executeUpdate("create TABLE UserPaintings(" +
                     "PaintingID INT NOT NULL, " +

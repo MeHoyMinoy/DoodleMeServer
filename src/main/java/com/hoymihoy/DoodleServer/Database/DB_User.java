@@ -10,9 +10,8 @@ public class DB_User {
     DBConnector DBC = new DBConnector();
 
     public int createNewUser(User user) throws SQLException {
-        String updateString = "INSERT INTO Users(userName,password,firstName,lastName,email,birthDate)" +
-                " VALUES('" + user.getUserName() + "', '" + user.getPassword() + "', '" + user.getFirstName() + "', '"
-                + user.getLastName() + "', '" + user.getEmail() + "', '" + user.getBirthDate() + "');";
+        String updateString = "INSERT INTO Users(userName, password, firstName, lastName, email, birthDate)" +
+                " VALUES('" + user.getUserName() + "', '" + user.getPassword() + "', '" + user.getFirstName() + "', '" + user.getLastName() + "', '" + user.getEmail() + "', '" + user.getBirthDate() + "');";
 
         try {
             DBC.con = DBC.initializeConnection();
