@@ -81,6 +81,7 @@ public class DBConnector {
 
             stmt.executeUpdate("create TABLE FriendsList(" +
                     "UserName VARCHAR(100) NOT NULL," +
+                    "Pending int NOT NULL," +
                     "FriendUserName VARCHAR(100) NOT NULL)");
 
             stmt.executeUpdate("create TABLE Paintings(" +
@@ -88,6 +89,7 @@ public class DBConnector {
                     "GameName VARCHAR(100) NOT NULL," +
                     "OwnerUserName VARCHAR(100) NOT NULL, " +
                     "ImagePath VARCHAR(100), " +
+                    "round INT NOT NULL," +
                     "CurrentPlayerUserName VARCHAR(100), " +
                     "CurrentPlayerSpot INT)");
 

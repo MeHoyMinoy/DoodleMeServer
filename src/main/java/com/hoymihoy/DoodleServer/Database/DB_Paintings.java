@@ -114,6 +114,7 @@ public class DB_Paintings {
         String updateString = "UPDATE Paintings SET" +
                 " GameName = '" + p.getGameName() +
                 "', ImagePath = '" + p.getImage().getName() +
+                "', round = '" + p.getRound() +
                 "', CurrentPlayerSpot = '" + p.getCurrentPlayerSpot() +
                 "', CurrentPlayerUserName = '" + p.getCurrentPlayerSpot() +
                 "' WHERE PaintingID = " + p.getPaintingID();
@@ -162,7 +163,11 @@ public class DB_Paintings {
                 image.setName(DBC.rs.getString("ImagePath"));
                 image.setData(getImageData(image.getName()));
                 p.setImage(image);
-
+                if(p.getCurrentPlayerUserName().equals(p.getOwnerUserName())){
+                    p.setRound((p.getRound()-1));
+                }else{
+                    p.setRound(p.getRound());
+                }
                 paintings.add(p);
             }
             DBC.con.close();

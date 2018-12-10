@@ -9,8 +9,16 @@ public class Painting {
     private Image image;
     private String currentPlayerUserName;
     private int currentPlayerSpot;
+    private int round;
     private ArrayList<String> players;
 
+
+    public int getRound(){
+        return round;
+    }
+    public void setRound(int round){
+        this.round = round;
+    }
     public String getCurrentPlayerUserName() {
         return currentPlayerUserName;
     }
