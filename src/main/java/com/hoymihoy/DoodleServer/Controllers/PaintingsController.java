@@ -8,10 +8,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.net.DatagramPacket;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.net.DatagramPacket;
+import java.net.ServerSocket;
+import java.net.InetAddress;
 
 @CrossOrigin
 @RestController
@@ -67,27 +71,31 @@ public class PaintingsController {
 
     @CrossOrigin
     @GetMapping(path = "/GetFeed")
-    public ArrayList queryUserPaintings(@RequestParam String user) throws SQLException {
+    public ArrayList<Painting> queryUserPaintings(@RequestParam String user) throws SQLException {
         ArrayList<Painting> userPaintings = DBP.getUserPaintings(user);
-        /*try
-        {
-            ServerSocket myServerSocket = new ServerSocket(9999);
-            Socket skt = myServerSocket.accept();
-            try
-            {
-                ObjectOutputStream objectOutput = new ObjectOutputStream(skt.getOutputStream());
-                objectOutput.writeObject(userPaintings);
-            }
-            catch (IOException e)
-            {
-                e.printStackTrace();
-            }
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }*/
         return userPaintings;
+//        Socket socket = null;
+//        System.out.println("hello");
+//            try {
+//                socket = new Socket("LocalHost", 8000);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//            try {
+//                assert socket != null;
+//                System.out.println("hell02");
+//                 ObjectOutputStream objectOutput = new ObjectOutputStream(socket.getOutputStream());
+//                 objectOutput.writeObject(userPaintings);
+//                 objectOutput.close();
+//                System.out.println("hello3");
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        try {
+//            socket.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 
 
