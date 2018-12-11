@@ -23,7 +23,6 @@ public class UserController {
         UserTest.setPassword("Jerry");
         UserTest.setFirstName("Bob");
         UserTest.setLastName("Jones");
-        UserTest.setEmail("bobjones123@gmail.com");
 
         DBU.createNewUser(AdminTest);
         DBU.createNewUser(UserTest);
@@ -64,7 +63,7 @@ public class UserController {
     }
 
     @CrossOrigin
-    @PostMapping (path =  "/UpdateProfile")
+    @PostMapping (path = "/UpdateProfile")
     public int UpdateProfileInformation(@RequestBody User user)
     {
         // Return with the number of entries updated. This number should be 1 if successful
