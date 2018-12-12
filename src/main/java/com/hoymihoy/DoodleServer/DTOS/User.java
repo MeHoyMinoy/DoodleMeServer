@@ -8,7 +8,7 @@ public class User {
     private String firstName;
     private String lastName;
     private Date birthDate;
-    private String email;
+    private String nickName;
 
     public String getUserName()
     {
@@ -58,13 +58,13 @@ public class User {
         this.birthDate = birthDate;
     }
 
-    public String getEmail()
+    public String getNickName()
     {
-        return email;
+        return nickName;
     }
 
-    public void setEmail(String email)
+    public void setNickName(String nickName)
     {
-        this.email = email;
+        this.nickName = nickName;
     }
 }

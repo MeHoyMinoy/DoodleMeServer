@@ -32,7 +32,6 @@ public class DoodleMeServer {
             person.setPassword("tacos");
             person.setFirstName("Anthony");
             person.setLastName("Pio");
-            person.setEmail("adp5384@psu.edu");
             DBU.createNewUser(person);
 
             person.setBirthDate(java.sql.Date.valueOf("1997-09-16"));
@@ -40,7 +39,7 @@ public class DoodleMeServer {
             person.setPassword("admin");
             person.setFirstName("Dont");
             person.setLastName("Dead");
-            person.setEmail("admin@gmail.com");
+            person.setNickName("admin@gmail.com");
             DBU.createNewUser(person);
 
             person.setBirthDate(java.sql.Date.valueOf("1997-09-16"));
@@ -48,7 +47,6 @@ public class DoodleMeServer {
             person.setPassword("admin");
             person.setFirstName("Open");
             person.setLastName("Inside");
-            person.setEmail("admin@gmail.com");
             DBU.createNewUser(person);
 
             person.setBirthDate(java.sql.Date.valueOf("1997-09-16"));
@@ -56,7 +54,6 @@ public class DoodleMeServer {
             person.setPassword("admin");
             person.setFirstName("Open");
             person.setLastName("Inside");
-            person.setEmail("admin@gmail.com");
             DBU.createNewUser(person);
             /////////////////////////////////////
 

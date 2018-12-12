@@ -20,12 +20,13 @@ import java.util.Arrays;
 public class DB_Paintings {
 
     DBConnector DBC = new DBConnector();
+    DBConnector DBC2 = new DBConnector();
 
     public int createNewPainting(Painting p) throws SQLException
     {
-
-        String updateString = "INSERT INTO Paintings(GameName, OwnerUserName, CurrentPlayerUserName, CurrentPlayerSpot) " +
-                "VALUES('" + p.getGameName() + "', '" + p.getOwnerUserName() + "', '" + p.getPlayers().get(1)+ "', " + (p.getCurrentPlayerSpot()+1) + ")";
+        System.out.println(p.getRounds());
+        String updateString = "INSERT INTO Paintings(GameName, OwnerUserName, CurrentPlayerUserName, CurrentPlayerSpot, Rounds) " +
+                "VALUES('" + p.getGameName() + "', '" + p.getOwnerUserName() + "', '" + p.getPlayers().get(1)+ "', " + (p.getCurrentPlayerSpot()+1) + ", " + (p.getRounds()) +")";
         try {
             DBC.con = DBC.initializeConnection();
             DBC.pstmt = DBC.con.prepareStatement(updateString, Statement.RETURN_GENERATED_KEYS);
@@ -84,6 +85,7 @@ public class DB_Paintings {
                 p.setImage(getImageData(DBC.rs.getString("ImagePath")));
                 p.setCurrentPlayerUserName(DBC.rs.getString("CurrentPlayerUserName"));
                 p.setCurrentPlayerSpot(DBC.rs.getInt("CurrentPlayerSpot"));
+                p.setRounds(DBC.rs.getInt("Rounds"));
             }
 
             DBC.con.close();
@@ -108,12 +110,15 @@ public class DB_Paintings {
     public int updatePainting(Painting p) throws SQLException
     {
         String queryGame = "SELECT * FROM UserPaintings WHERE PaintingID ='" + p.getPaintingID() + "';";
-//        String userNames = "";
+        int roundNumber = 0;
         ArrayList<String> userNames = new ArrayList<String>();
         try {
             DBC.con = DBC.initializeConnection();
             DBC.stmt = DBC.con.createStatement();
             DBC.rs = DBC.stmt.executeQuery(queryGame);
+
+            //roundNumber = DBC.rs.getInt("Rounds");
+
             while (DBC.rs.next())
             {
                 userNames.add(DBC.rs.getString("userName"));
@@ -130,11 +135,39 @@ public class DB_Paintings {
             {DBC.stmt.close();}
         }
 
+        String rounds = "SELECT * FROM Paintings WHERE PaintingID ='" + p.getPaintingID() + "';";
+
+        try {
+            DBC2.con = DBC2.initializeConnection();
+            DBC2.stmt = DBC2.con.createStatement();
+            DBC2.rs = DBC2.stmt.executeQuery(rounds);
+
+            while (DBC2.rs.next())
+            {
+                roundNumber = DBC2.rs.getInt("Rounds");
+            }
+
+            DBC2.con.close();
+        }
+        catch (Exception e) {
+            System.out.println(e);
+            DBC2.con.close();
+            return -1;
+        }
+        finally {
+            if (DBC2.stmt != null)
+            {DBC2.stmt.close();}
+        }
+
         int temp = p.getCurrentPlayerSpot() + 1;
 
         if(temp == userNames.size()){
             temp = 0;
             p.setCurrentPlayerSpot(0);
+            roundNumber -= 1;
+            if(roundNumber < 0){
+                roundNumber = 0;
+                }
         }
         else p.setCurrentPlayerSpot(temp);
         p.setCurrentPlayerUserName(userNames.get(temp));
@@ -144,6 +177,10 @@ public class DB_Paintings {
 
         String updateSpot = "UPDATE Paintings SET" +
                 " CurrentPlayerSpot = " + temp +
+                " WHERE PaintingID = " + p.getPaintingID();
+
+        String updateRound = "UPDATE Paintings SET" +
+                " Rounds = " + roundNumber +
                 " WHERE PaintingID = " + p.getPaintingID();
 
         String updateName = "UPDATE Paintings SET " +
@@ -164,6 +201,7 @@ public class DB_Paintings {
             DBC.con = DBC.initializeConnection();
             DBC.stmt = DBC.con.createStatement();
             int returnValue = DBC.stmt.executeUpdate(updateSpot);
+            int returnNumberCheck = DBC.stmt.executeUpdate(updateRound);
             int returnV = DBC.stmt.executeUpdate(updateName);
             DBC.con.close();
             return returnValue;
@@ -204,6 +242,7 @@ public class DB_Paintings {
                 p.setImage(getImageData(DBC.rs.getString("ImagePath")));
                 p.setCurrentPlayerUserName(DBC.rs.getString("CurrentPlayerUserName"));
                 p.setCurrentPlayerSpot(DBC.rs.getInt("CurrentPlayerSpot"));
+                p.setRounds(DBC.rs.getInt("Rounds"));
 
                 paintings.add(p);
             }

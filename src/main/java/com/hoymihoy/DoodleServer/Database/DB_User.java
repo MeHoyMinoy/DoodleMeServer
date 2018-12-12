@@ -10,9 +10,8 @@ public class DB_User {
     DBConnector DBC = new DBConnector();
 
     public int createNewUser(User user) throws SQLException {
-        String updateString = "INSERT INTO Users(userName,password,firstName,lastName,email,birthDate)" +
-                " VALUES('" + user.getUserName() + "', '" + user.getPassword() + "', '" + user.getFirstName() + "', '"
-                + user.getLastName() + "', '" + user.getEmail() + "', '" + user.getBirthDate() + "');";
+        String updateString = "INSERT INTO Users(userName, password, firstName, lastName, nickName, birthDate)" +
+                " VALUES('" + user.getUserName() + "', '" + user.getPassword() + "', '" + user.getFirstName() + "', '" + user.getLastName() + "', '" + user.getNickName() + "', '" + user.getBirthDate() + "');";
 
         try {
             DBC.con = DBC.initializeConnection();
@@ -47,7 +46,7 @@ public class DB_User {
                 user.setUserName(DBC.rs.getString("userName"));
                 user.setFirstName(DBC.rs.getString("firstName"));
                 user.setLastName(DBC.rs.getString("lastName"));
-                user.setEmail(DBC.rs.getString("email"));
+                user.setNickName(DBC.rs.getString("nickName"));
                 user.setBirthDate(DBC.rs.getDate("birthDate"));
             }
 
@@ -97,12 +96,9 @@ public class DB_User {
     }
 
     public int updateUser(User user) throws SQLException {
-        String updateString = "UPDATE Users SET "+
-                "firstName = '" + user.getFirstName() +
-                "', lastName = '" + user.getLastName() +
-                "', email = '" + user.getEmail() +
-                "', birthDate = '" + user.getBirthDate() +
-                "' WHERE userName COLLATE utf8_bin = '" + user.getUserName() +"'";
+
+        System.out.println(user.getUserName());
+        String updateString = "UPDATE Users SET " + " nickName = '" + user.getNickName() + "' WHERE userName = '" + user.getUserName() + "'";
         try {
             DBC.con = DBC.initializeConnection();
             DBC.stmt = DBC.con.createStatement();

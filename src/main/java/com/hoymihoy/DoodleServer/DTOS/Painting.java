@@ -11,6 +11,7 @@ public class Painting implements Serializable {
     private String currentPlayerUserName;
     private int currentPlayerSpot;
     private ArrayList<String> players;
+    private int rounds;
 
     public String getCurrentPlayerUserName() {
         return currentPlayerUserName;
@@ -58,6 +59,14 @@ public class Painting implements Serializable {
 
     public void setOwnerUserName(String ownerUserName) {
         this.ownerUserName = ownerUserName;
+    }
+
+    public void setRounds(int rounds) {
+        this.rounds = rounds;
+    }
+
+    public int getRounds() {
+        return rounds;
     }
 
     public String getImage() {

@@ -76,7 +76,7 @@ public class DBConnector {
                     "password VARCHAR(100) NOT NULL, " +
                     "firstName VARCHAR(100), " +
                     "lastName VARCHAR(100), " +
-                    "email VARCHAR(100), " +
+                    "nickName VARCHAR(100), " +
                     "birthDate DATE)");
 
             stmt.executeUpdate("create TABLE FriendsList(" +
@@ -89,7 +89,8 @@ public class DBConnector {
                     "OwnerUserName VARCHAR(100) NOT NULL, " +
                     "ImagePath VARCHAR(100), " +
                     "CurrentPlayerUserName VARCHAR(100), " +
-                    "CurrentPlayerSpot INT)");
+                    "CurrentPlayerSpot INT, "+
+                    "Rounds INT)");
 
             stmt.executeUpdate("create TABLE UserPaintings(" +
                     "PaintingID INT NOT NULL, " +
