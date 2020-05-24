@@ -12,9 +12,9 @@ public class DoodleMeServer {
 
     public static void main(String[] args) throws SQLException {
         DBConnector DBC = new DBConnector();
-        DBC.dropAllTables();
-        DBC.createTables();
-        populateServer();
+        //DBC.dropAllTables();
+        //DBC.createTables();
+        //populateServer();
         SpringApplication.run(DoodleMeServer.class, args);
 
     }
@@ -27,50 +27,50 @@ public class DoodleMeServer {
         try{
             //Populating CreateUser
             /////////////////////////////////////
-            person.setBirthDate(java.sql.Date.valueOf("1998-01-09"));
-            person.setUserName("adp5384");
-            person.setPassword("tacos");
-            person.setFirstName("Anthony");
-            person.setLastName("Pio");
-            DBU.createNewUser(person);
-
-            person.setBirthDate(java.sql.Date.valueOf("1997-09-16"));
-            person.setUserName("admin1");
-            person.setPassword("admin");
-            person.setFirstName("Dont");
-            person.setLastName("Dead");
-            person.setNickName("admin@gmail.com");
-            DBU.createNewUser(person);
-
-            person.setBirthDate(java.sql.Date.valueOf("1997-09-16"));
-            person.setUserName("admin2");
-            person.setPassword("admin");
-            person.setFirstName("Open");
-            person.setLastName("Inside");
-            DBU.createNewUser(person);
-
-            person.setBirthDate(java.sql.Date.valueOf("1997-09-16"));
-            person.setUserName("admin3");
-            person.setPassword("admin");
-            person.setFirstName("Open");
-            person.setLastName("Inside");
-            DBU.createNewUser(person);
+//            person.setBirthDate(java.sql.Date.valueOf("1998-01-09"));
+//            person.setUserName("adp5384");
+//            person.setPassword("tacos");
+//            person.setFirstName("Anthony");
+//            person.setLastName("Pio");
+//            DBU.createNewUser(person);
+//
+//            person.setBirthDate(java.sql.Date.valueOf("1997-09-16"));
+//            person.setUserName("admin1");
+//            person.setPassword("admin");
+//            person.setFirstName("Dont");
+//            person.setLastName("Dead");
+//            person.setNickName("admin@gmail.com");
+//            DBU.createNewUser(person);
+//
+//            person.setBirthDate(java.sql.Date.valueOf("1997-09-16"));
+//            person.setUserName("admin2");
+//            person.setPassword("admin");
+//            person.setFirstName("Open");
+//            person.setLastName("Inside");
+//            DBU.createNewUser(person);
+//
+//            person.setBirthDate(java.sql.Date.valueOf("1997-09-16"));
+//            person.setUserName("admin3");
+//            person.setPassword("admin");
+//            person.setFirstName("Open");
+//            person.setLastName("Inside");
+//            DBU.createNewUser(person);
             /////////////////////////////////////
 
             //Adding friends for user adp5384
-            String un = "adp5384";
-            DBFL.addFriendship(un, "admin1");
-            DBFL.addFriendship(un, "Elmo");
-            DBFL.addFriendship(un, "Grumpy Cat");
-            DBFL.addFriendship(un, "Is this loss?");
-            DBFL.addFriendship(un, "Bilbo Baggins");
-            DBFL.addFriendship(un, "Frodo Baggins");
-            DBFL.addFriendship(un, "Gandalf the Grey");
-            DBFL.addFriendship(un, "Gandalf the White");
-            DBFL.addFriendship(un, "General Kenobi");
-            DBFL.addFriendship(un, "General Grievous");
-            DBFL.addFriendship(un, "Count Douku");
-            DBFL.addFriendship(un, "Yoda the Green");
+//            String un = "adp5384";
+//            DBFL.addFriendship(un, "admin1");
+//            DBFL.addFriendship(un, "Elmo");
+//            DBFL.addFriendship(un, "Grumpy Cat");
+//            DBFL.addFriendship(un, "Is this loss?");
+//            DBFL.addFriendship(un, "Bilbo Baggins");
+//            DBFL.addFriendship(un, "Frodo Baggins");
+//            DBFL.addFriendship(un, "Gandalf the Grey");
+//            DBFL.addFriendship(un, "Gandalf the White");
+//            DBFL.addFriendship(un, "General Kenobi");
+//            DBFL.addFriendship(un, "General Grievous");
+//            DBFL.addFriendship(un, "Count Douku");
+//            DBFL.addFriendship(un, "Yoda the Green");
         } catch(Exception E){
         }
 //        //Populating FriendsList

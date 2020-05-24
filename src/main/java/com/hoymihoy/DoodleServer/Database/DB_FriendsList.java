@@ -100,7 +100,7 @@ public class DB_FriendsList {
 
         String queryString = "SELECT FriendUserName " +
                 "FROM FriendsList " +
-                "WHERE UserName COLLATE utf8_bin = '" + userName + "'";
+                "WHERE UserName COLLATE SQL_Latin1_General_CP1_CI_AS = '" + userName + "'";
 
         try {
             DBC.con = DBC.initializeConnection();

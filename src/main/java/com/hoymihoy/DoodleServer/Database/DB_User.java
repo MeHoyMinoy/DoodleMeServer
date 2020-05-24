@@ -33,7 +33,7 @@ public class DB_User {
 
     public User queryUserName(String userName) throws SQLException {
         String queryString = "SELECT * FROM Users " +
-                "WHERE userName COLLATE utf8_bin = '" + userName + "' ";
+                "WHERE userName COLLATE SQL_Latin1_General_CP1_CI_AS = '" + userName + "' ";
         User user = new User();
 
         try {
@@ -67,7 +67,7 @@ public class DB_User {
     }
 
     public int queryLoginCredentials(SecureUserLogin sul) throws SQLException {
-        String queryString = "SELECT count(*) AS rows FROM Users WHERE userName COLLATE utf8_bin = '" + sul.getUserName() + "' AND password COLLATE utf8_bin = '" + sul.getPassword() + "'";
+        String queryString = "SELECT count(*) AS rows FROM Users WHERE userName COLLATE SQL_Latin1_General_CP1_CI_AS = '" + sul.getUserName() + "' AND password COLLATE SQL_Latin1_General_CP1_CI_AS = '" + sul.getPassword() + "'";
 
         int rows = 0;
 

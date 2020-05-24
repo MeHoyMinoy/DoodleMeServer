@@ -224,7 +224,7 @@ public class DB_Paintings {
         String queryString = "SELECT * " +
                 "FROM Paintings AS P " +
                 "JOIN UserPaintings AS UP ON UP.PaintingID = P.PaintingID " +
-                "WHERE UP.userName COLLATE utf8_bin = '" + u + "'";
+                "WHERE UP.userName COLLATE SQL_Latin1_General_CP1_CI_AS = '" + u + "'";
 
         try {
             DBC.con = DBC.initializeConnection();

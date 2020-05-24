@@ -3,6 +3,11 @@ package com.hoymihoy.DoodleServer.Database;
 import com.hoymihoy.DoodleServer.DTOS.SecureUserLogin;
 import com.hoymihoy.DoodleServer.DTOS.User;
 import java.sql.Blob;
+import java.sql.Connection;
+import java.sql.Statement;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.DriverManager;
 
 import java.sql.*;
 
@@ -11,25 +16,29 @@ public class DBConnector {
     public Statement stmt;
     public ResultSet rs;
     public PreparedStatement pstmt;
-    private String DBUsername = "admin";
-    private String DBPassword = "DoodleMe";
+    private String hostName = "doodle-me-server.database.windows.net";
+    private String DBName = "DoodleMeDB";
+    private String DBUsername = "DoodleMeAdmin";//""admin";
+    private String DBPassword = "DoodleMe09";//"DoodleMe";
     private String jdbcUrl = String.format(
-                    "jdbc:mysql://35.236.253.241:3306/DoodleMe_DB",
-                    "DoodleMe_DB",
-                    "direct-return-186020:us-east4:doodle-database"
-    );
-    
+            "jdbc:sqlserver://doodle-me-server.database.windows.net:1433;database=DoodleMeDB;user=DoodleMeAdmin@doodle-me-server;password=" +
+                    "%s;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;", DBPassword);
+
+
+
+
     protected Connection initializeConnection() throws SQLException {
-        try {
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
-            con = DriverManager.getConnection(jdbcUrl, DBUsername, DBPassword);
+        try{
+            con = DriverManager.getConnection(jdbcUrl);
+            String schema = con.getSchema();
+            System.out.println("Successful connection - Schema: " + schema);
             stmt=con.createStatement();
-        } catch (Exception ex) {
+        } catch (Exception ex){
             System.out.println(ex);
             con.close();
             return con;
         }
-        
+
         finally {
             if (stmt != null) {
                 stmt.close();
@@ -44,13 +53,13 @@ public class DBConnector {
             
             stmt = con.createStatement();
             
-            stmt.executeUpdate("DROP TABLE Users");
+            //stmt.executeUpdate("DROP TABLE Users");
 
-            stmt.executeUpdate("DROP TABLE FriendsList");
+            //stmt.executeUpdate("DROP TABLE FriendsList");
 
-            stmt.executeUpdate("DROP TABLE Paintings");
+            //stmt.executeUpdate("DROP TABLE Paintings");
 
-            stmt.executeUpdate("DROP TABLE UserPaintings");
+            //stmt.executeUpdate("DROP TABLE UserPaintings");
         } 
         catch (Exception ex) {
             System.out.println(ex);
